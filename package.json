@@ -1,5 +1,5 @@
 {
-  "name": "fitbit-api-client",
+  "name": "@the-phage-inc/fitbit-api-client",
   "version": "0.0.1",
   "description": "",
   "main": "dist/index.js",
