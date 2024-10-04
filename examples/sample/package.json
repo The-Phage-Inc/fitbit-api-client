@@ -1,0 +1,33 @@
+{
+  "name": "sample",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "author": "takecchi",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/The-Phage-Inc/fitbit-api-client.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/express": "5.0.0",
+    "@types/jest": "29.5.13",
+    "jest": "29.7.0",
+    "ts-jest": "29.2.5",
+    "typescript": "5.5.4",
+    "typescript-eslint": "8.8.0"
+  },
+  "dependencies": {
+    "dotenv": "16.4.5",
+    "express": "4.21.0",
+    "fitbit-api-client": "file:../../"
+  }
+}
