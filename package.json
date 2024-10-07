@@ -1,6 +1,6 @@
 {
-  "name": "@the-phage-inc/fitbit-api-client",
-  "version": "0.0.1",
+  "name": "fitbit-api-client",
+  "version": "0.0.3",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -12,9 +12,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/The-Phage-Inc/fitbit-api-client.git"
-  },
-  "publishConfig": {
-    "@the-phage-inc:registry": "https://npm.pkg.github.com"
   },
   "files": [
     "dist"
