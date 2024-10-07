@@ -1,3 +1,6 @@
+import { DatasetType, DATE } from '../../types';
+import { exists, get } from '../../utils/types.utils';
+
 /**
  * 歩数データのレスポンス
  */
@@ -8,8 +11,28 @@ export interface StepsResponse {
   activitiesSteps: StepsDailyData[];
   /**
    * 歩数の詳細データ
+   * 取得にはIntradayの申請もしくはApplicationTypeがPersonalである必要があります。
    */
-  activitiesStepsIntraday: ActivitiesStepsIntraday;
+  activitiesStepsIntraday?: ActivitiesStepsIntraday;
+}
+
+export function StepsResponseFromJson(
+  utcDate: DATE,
+  json: unknown,
+): StepsResponse {
+  const activitiesSteps = get<unknown[]>(json, 'activities-steps').map((data) =>
+    StepsDailyDataFromJson(data),
+  );
+  const activitiesStepsIntraday = exists(json, 'activities-steps-intraday')
+    ? ActivitiesStepsIntradayFromJson(
+        utcDate,
+        get<unknown>(json, 'activities-steps-intraday'),
+      )
+    : undefined;
+  return {
+    activitiesSteps,
+    activitiesStepsIntraday,
+  };
 }
 
 export interface StepsDailyData {
@@ -18,10 +41,17 @@ export interface StepsDailyData {
    */
   steps: number;
   /**
-   * 日付
-   * toUTCString()を使用した際に "Wed, 01 Dec 2021 00:00:00 GMT" のような形式になる想定
+   * UTCの日付
+   * 'yyyy-MM-dd'
    */
-  date: Date;
+  utcDate: DATE;
+}
+
+function StepsDailyDataFromJson(json: unknown): StepsDailyData {
+  return {
+    steps: get<number>(json, 'value'),
+    utcDate: get<DATE>(json, 'dateTime'),
+  };
 }
 
 /**
@@ -40,7 +70,20 @@ export interface ActivitiesStepsIntraday {
   /**
    * データセットの種類
    */
-  datasetType: 'second' | 'minute';
+  datasetType: DatasetType;
+}
+
+function ActivitiesStepsIntradayFromJson(
+  utcDate: DATE,
+  json: unknown,
+): ActivitiesStepsIntraday {
+  return {
+    dataset: get<unknown[]>(json, 'dataset').map((data) =>
+      StepsIntradayDataFromJson(utcDate, data),
+    ),
+    datasetInterval: get<number>(json, 'datasetInterval'),
+    datasetType: get<DatasetType>(json, 'datasetType'),
+  };
 }
 
 /**
@@ -57,4 +100,14 @@ export interface StepsIntradayData {
    * @type {number}
    */
   steps: number;
+}
+
+function StepsIntradayDataFromJson(
+  utcDate: DATE,
+  json: unknown,
+): StepsIntradayData {
+  return {
+    dateTime: new Date(`${utcDate}T${get<string>(json, 'time')}Z`),
+    steps: get<number>(json, 'value'),
+  };
 }

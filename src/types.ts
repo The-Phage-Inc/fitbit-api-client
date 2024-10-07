@@ -17,7 +17,7 @@ export type RoundOption = 'ceil' | 'floor';
  * リクエスト用の日付
  * 'yyyy-MM-dd'
  */
-export type DATE = `${YYYY}-${MM}-${DD}`;
+export type DATE = `${YYYY}-${MM}-${DD}` | string;
 type ZERO_TO_NINE = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 type YYYY = `20${ZERO_TO_NINE}${ZERO_TO_NINE}`;
 type MM = `0${1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9}` | `1${0 | 1 | 2}`;

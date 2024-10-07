@@ -3,8 +3,9 @@ import {
   HeartRateResponse,
   PartialAuthToken,
   Session,
+  StepsResponse,
 } from './models';
-import { heartRateApi, oauthApi } from './apis';
+import { activityApi, heartRateApi, oauthApi } from './apis';
 import { CODE_CHALLENGE_METHOD, FITBIT_AUTH_URL } from './constants';
 import {
   generateCodeChallenge,
@@ -45,7 +46,10 @@ export class FitbitClient {
       handleOAuthCallback: this.handleOAuthCallback.bind(this),
     };
     this.heartRate = {
-      getHeartRateIntradayByDate: this.getHeartRateIntradayByDate.bind(this),
+      getHeartRateIntraday: this.getHeartRateIntraday.bind(this),
+    };
+    this.activity = {
+      getStepsIntraday: this.getStepsIntraday.bind(this),
     };
   }
 
@@ -66,10 +70,17 @@ export class FitbitClient {
   };
 
   public heartRate: {
-    getHeartRateIntradayByDate: (
+    getHeartRateIntraday: (
       utcDate: DATE,
       detailLevel: DetailLevel,
     ) => Promise<HeartRateResponse>;
+  };
+
+  public activity: {
+    getStepsIntraday: (
+      utcDate: DATE,
+      detailLevel: '1min' | '5min' | '15min',
+    ) => Promise<StepsResponse>;
   };
 
   /**
@@ -186,17 +197,29 @@ export class FitbitClient {
     return newToken.accessToken;
   }
 
-  private async getHeartRateIntradayByDate(
+  private async getHeartRateIntraday(
     utcDate: DATE,
     detailLevel: DetailLevel,
   ): Promise<HeartRateResponse> {
     const accessToken = await this.auth.getAccessToken();
     return await heartRateApi.getHeartRateIntradayByDate(
       {
-        userId: '-',
         utcDate: utcDate,
         detailLevel: detailLevel,
-        timezone: 'UTC',
+      },
+      { accessToken },
+    );
+  }
+
+  private async getStepsIntraday(
+    utcDate: DATE,
+    detailLevel: '1min' | '5min' | '15min',
+  ): Promise<StepsResponse> {
+    const accessToken = await this.auth.getAccessToken();
+    return await activityApi.getStepsIntradayByDate(
+      {
+        utcDate: utcDate,
+        detailLevel: detailLevel,
       },
       { accessToken },
     );
