@@ -17,9 +17,7 @@ interface RefreshTokenRequest {
 }
 
 export class OAuthApi extends BaseApi {
-  getScope() {
-    return null;
-  }
+  override scope = null;
 
   async postTokenRefresh(
     request: RefreshTokenRequest,

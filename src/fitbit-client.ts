@@ -12,7 +12,7 @@ import {
   generateCodeVerifier,
   generateState,
 } from './utils/oauth.utils';
-import { DATE, DetailLevel, FitbitScope } from './types';
+import { UtcDate, DetailLevel, FitbitScope, MinuteDetailLevel } from './types';
 
 type Props = {
   clientId: string;
@@ -76,15 +76,15 @@ export class FitbitClient {
 
   public heartRate: {
     getHeartRateIntraday: (
-      utcDate: DATE,
+      utcDate: UtcDate,
       detailLevel: DetailLevel,
     ) => Promise<HeartRateResponse>;
   };
 
   public activity: {
     getStepsIntraday: (
-      utcDate: DATE,
-      detailLevel: '1min' | '5min' | '15min',
+      utcDate: UtcDate,
+      detailLevel: MinuteDetailLevel,
     ) => Promise<StepsResponse>;
   };
 
@@ -218,7 +218,7 @@ export class FitbitClient {
   }
 
   private async getHeartRateIntraday(
-    utcDate: DATE,
+    utcDate: UtcDate,
     detailLevel: DetailLevel,
   ): Promise<HeartRateResponse> {
     const accessToken = await this.auth.getAccessToken();
@@ -232,8 +232,8 @@ export class FitbitClient {
   }
 
   private async getStepsIntraday(
-    utcDate: DATE,
-    detailLevel: '1min' | '5min' | '15min',
+    utcDate: UtcDate,
+    detailLevel: MinuteDetailLevel,
   ): Promise<StepsResponse> {
     const accessToken = await this.auth.getAccessToken();
     return await activityApi.getStepsIntradayByDate(

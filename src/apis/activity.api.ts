@@ -1,14 +1,14 @@
 import { BaseApi, TokenRequestOptions } from './base.api';
 import { StepsResponse, StepsResponseFromJson } from '../models';
-import { DATE } from '../types';
+import { MinuteDetailLevel, UtcDate } from '../types';
 
 interface GetActivityIntradayByDateRequest {
-  utcDate: DATE;
-  detailLevel: '1min' | '5min' | '15min';
+  utcDate: UtcDate;
+  detailLevel: MinuteDetailLevel;
 }
 
 export class ActivityApi extends BaseApi {
-  getScope = () => 'activity' as const;
+  override scope = 'activity' as const;
 
   /**
    * 歩数記録取得API
