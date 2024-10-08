@@ -64,7 +64,7 @@ export class FitbitClient {
 
   public oauth: {
     createSession: (redirectUrl: string) => Session;
-    getAuthorizationUrl: (scopes: FitbitScope[]) => string;
+    getAuthorizationUrl: (scopes: readonly FitbitScope[]) => string;
     setSession: (session: Session) => void;
     handleOAuthCallback: (code: string, state: string) => Promise<AuthToken>;
   };
@@ -110,7 +110,7 @@ export class FitbitClient {
   /**
    * 認証URLを取得する
    */
-  private getAuthorizationUrl(scopes: FitbitScope[]): string {
+  private getAuthorizationUrl(scopes: readonly FitbitScope[]): string {
     if (!this.session) {
       throw new Error(
         'createSession or setSession must be called before getAuthorizationUrl',
