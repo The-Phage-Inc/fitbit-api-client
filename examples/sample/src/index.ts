@@ -24,7 +24,7 @@ app.get('/auth', (req, res) => {
     clientId: CLIENT_ID,
     clientSecret: CLIENT_SECRET,
   });
-  const session = client.oauth.createSession(REDIRECT_URI);
+  const session = client.oauth.createSession(REDIRECT_URI, true);
   database.saveSession(session);
 
   const authorizationUrl = client.oauth.getAuthorizationUrl([

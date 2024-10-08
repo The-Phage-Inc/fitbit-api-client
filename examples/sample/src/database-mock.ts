@@ -1,12 +1,12 @@
-import { Session } from 'fitbit-api-client';
+import { OAuthSession } from 'fitbit-api-client';
 
 /**
  * セッションをDBに保存して復元を再現
  */
 export class DatabaseMock {
-  session: Session | undefined;
+  session: OAuthSession | undefined;
 
-  saveSession(session: Session) {
+  saveSession(session: OAuthSession) {
     this.session = session;
   }
 
