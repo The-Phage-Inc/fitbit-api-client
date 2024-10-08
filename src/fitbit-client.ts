@@ -38,6 +38,7 @@ export class FitbitClient {
       setToken: this.setToken.bind(this),
       getAccessToken: this.getAccessToken.bind(this),
       refreshAccessToken: this.refreshAccessToken.bind(this),
+      isAccessTokenExpired: this.isAccessTokenExpired.bind(this),
     };
     this.oauth = {
       createSession: this.createSession.bind(this),
@@ -59,7 +60,8 @@ export class FitbitClient {
   public auth: {
     setToken: (token: PartialAuthToken) => void;
     getAccessToken: () => Promise<string>;
-    refreshAccessToken: () => Promise<string>;
+    refreshAccessToken: () => Promise<AuthToken>;
+    isAccessTokenExpired: () => boolean;
   };
 
   public oauth: {
@@ -160,34 +162,47 @@ export class FitbitClient {
     this.token = token;
   }
 
+  private validateToken(): { expiresAt: Date; accessToken: string } {
+    if (!this.token) {
+      throw new Error('token is required.');
+    }
+    if (!this.token.accessToken || !this.token.expiresAt) {
+      throw new Error(
+        'accessToken and expiresAt is required. Please call a refreshAccessToken().',
+      );
+    }
+    return {
+      expiresAt: this.token.expiresAt,
+      accessToken: this.token.accessToken,
+    };
+  }
+
+  /**
+   * アクセストークンが期限切れまたはnullの場合にtrueを返す
+   */
+  private isAccessTokenExpired(): boolean {
+    const token = this.validateToken();
+    return token.expiresAt < new Date();
+  }
+
   /**
    * アクセストークンを取得する
-   * 有効期限が切れている場合はリフレッシュトークンを使用して再取得する
-   * @throws {Error} リフレッシュトークンが設定されていない場合
+   * @throws {Error} アクセストークンが有効切れ
    */
   private async getAccessToken(): Promise<string> {
-    if (!this.token) {
-      throw new Error('refreshToken is required.');
+    const token = this.validateToken();
+    if (this.isAccessTokenExpired()) {
+      throw new Error('Access token is expired.');
     }
-
-    // 期限が切れているまたはトークンがnullだった場合
-    const now = new Date();
-    if (
-      !this.token.expiresAt ||
-      !this.token.accessToken ||
-      this.token.expiresAt < now
-    ) {
-      return this.refreshAccessToken();
-    }
-
-    return this.token.accessToken;
+    return token.accessToken;
   }
 
   /**
    * リフレッシュトークンを使用してアクセストークンを再取得する
+   * ※リフレッシュトークンは一度使用したら無効になる為、返却されたトークンを保存するようにお願いします。
    * @throws {Error} リフレッシュトークンが設定されていない場合
    */
-  private async refreshAccessToken(): Promise<string> {
+  private async refreshAccessToken(): Promise<AuthToken> {
     if (!this.token) {
       throw new Error('refreshToken is required.');
     }
@@ -199,7 +214,7 @@ export class FitbitClient {
     });
 
     this.setToken(newToken);
-    return newToken.accessToken;
+    return newToken;
   }
 
   private async getHeartRateIntraday(
