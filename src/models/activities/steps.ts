@@ -1,4 +1,4 @@
-import { DatasetType, DATE } from '../../types';
+import { DatasetType, UtcDate } from '../../types';
 import { exists, get } from '../../utils/types.utils';
 
 /**
@@ -17,7 +17,7 @@ export interface StepsResponse {
 }
 
 export function StepsResponseFromJson(
-  utcDate: DATE,
+  utcDate: UtcDate,
   json: unknown,
 ): StepsResponse {
   const activitiesSteps = get<unknown[]>(json, 'activities-steps').map((data) =>
@@ -44,13 +44,13 @@ export interface StepsDailyData {
    * UTCの日付
    * 'yyyy-MM-dd'
    */
-  utcDate: DATE;
+  utcDate: UtcDate;
 }
 
 function StepsDailyDataFromJson(json: unknown): StepsDailyData {
   return {
     steps: get<number>(json, 'value'),
-    utcDate: get<DATE>(json, 'dateTime'),
+    utcDate: get<UtcDate>(json, 'dateTime'),
   };
 }
 
@@ -74,7 +74,7 @@ export interface ActivitiesStepsIntraday {
 }
 
 function ActivitiesStepsIntradayFromJson(
-  utcDate: DATE,
+  utcDate: UtcDate,
   json: unknown,
 ): ActivitiesStepsIntraday {
   return {
@@ -103,7 +103,7 @@ export interface StepsIntradayData {
 }
 
 function StepsIntradayDataFromJson(
-  utcDate: DATE,
+  utcDate: UtcDate,
   json: unknown,
 ): StepsIntradayData {
   return {

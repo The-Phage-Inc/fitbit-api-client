@@ -1,4 +1,4 @@
-import { DatasetType, DATE, ZoneName } from '../types';
+import { DatasetType, UtcDate, ZoneName } from '../types';
 import { exists, get } from '../utils/types.utils';
 
 /**
@@ -17,7 +17,7 @@ export interface HeartRateResponse {
 }
 
 export function HeartRateResponseFromJson(
-  utcDate: DATE,
+  utcDate: UtcDate,
   json: unknown,
 ): HeartRateResponse {
   const activitiesHeart = get<unknown[]>(json, 'activities-heart').map((data) =>
@@ -40,7 +40,7 @@ export interface HeartRateData {
    * UTCの日付
    * 'yyyy-MM-dd'
    */
-  utcDate: DATE;
+  utcDate: UtcDate;
   /**
    * 心拍数
    */
@@ -61,7 +61,7 @@ function HeartRateDataFromJson(json: unknown): HeartRateData {
     'customHeartRateZones',
   ).map((zone) => HeartRateZoneFromJson(zone));
   return {
-    utcDate: get<DATE>(json, 'dateTime'),
+    utcDate: get<UtcDate>(json, 'dateTime'),
     value: {
       restingHeartRate: exists(value, 'restingHeartRate')
         ? get<number>(value, 'restingHeartRate')
@@ -92,7 +92,7 @@ export interface ActivitiesHeartIntraday {
 }
 
 function ActivitiesHeartIntradayFromJson(
-  utcDate: DATE,
+  utcDate: UtcDate,
   json: unknown,
 ): ActivitiesHeartIntraday {
   return {
@@ -121,7 +121,7 @@ export interface HeartRateIntradayData {
 }
 
 function HeartRateIntradayDataFromJson(
-  date: DATE,
+  date: UtcDate,
   json: unknown,
 ): HeartRateIntradayData {
   return {
