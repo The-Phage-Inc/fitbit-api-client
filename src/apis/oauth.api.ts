@@ -4,7 +4,7 @@ import { AuthToken, AuthTokenFromJson } from '../models';
 interface AuthorizationRequest {
   clientId: string;
   clientSecret: string;
-  redirectUrl: string;
+  redirectUrl?: string;
   codeVerifier: string;
   code: string;
 }
@@ -61,10 +61,12 @@ export class OAuthApi extends BaseApi {
     const body = new URLSearchParams({
       client_id: clientId,
       grant_type: 'authorization_code',
-      redirect_uri: redirectUrl,
       code,
       code_verifier: codeVerifier,
     });
+    if (redirectUrl) {
+      body.append('redirect_uri', redirectUrl);
+    }
 
     const headers = {
       Authorization:

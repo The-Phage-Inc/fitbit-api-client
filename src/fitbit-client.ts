@@ -1,8 +1,8 @@
 import {
   AuthToken,
   HeartRateResponse,
+  OAuthSession,
   PartialAuthToken,
-  Session,
   StepsResponse,
 } from './models';
 import { activityApi, heartRateApi, oauthApi } from './apis';
@@ -18,14 +18,14 @@ type Props = {
   clientId: string;
   clientSecret: string;
   token?: PartialAuthToken;
-  session?: Session;
+  session?: OAuthSession;
 };
 
 export class FitbitClient {
   private readonly clientSecret: string;
   private readonly clientId: string;
   private token?: PartialAuthToken;
-  private session?: Session;
+  private session?: OAuthSession;
 
   constructor({ clientId, clientSecret, token, session }: Props) {
     this.clientId = clientId;
@@ -63,9 +63,12 @@ export class FitbitClient {
   };
 
   public oauth: {
-    createSession: (redirectUrl: string) => Session;
+    createSession: (
+      redirectUrl: string | null,
+      usePkce: boolean,
+    ) => OAuthSession;
     getAuthorizationUrl: (scopes: readonly FitbitScope[]) => string;
-    setSession: (session: Session) => void;
+    setSession: (session: OAuthSession) => void;
     handleOAuthCallback: (code: string, state: string) => Promise<AuthToken>;
   };
 
@@ -86,16 +89,18 @@ export class FitbitClient {
   /**
    * セッションを作成する
    */
-  private createSession(redirectUrl: string): Session {
+  private createSession(
+    redirectUrl: string | null,
+    usePkce: boolean = true,
+  ): OAuthSession {
     const state = generateState();
     const codeVerifier = generateCodeVerifier();
-    const codeChallenge = generateCodeChallenge(codeVerifier);
     this.session = {
       state,
       codeVerifier,
-      codeChallenge,
-      challengeMethod: CODE_CHALLENGE_METHOD,
-      redirectUrl,
+      codeChallenge: usePkce ? generateCodeChallenge(codeVerifier) : undefined,
+      challengeMethod: usePkce ? CODE_CHALLENGE_METHOD : undefined,
+      redirectUrl: redirectUrl ?? undefined,
     };
     return this.session;
   }
@@ -103,7 +108,7 @@ export class FitbitClient {
   /**
    * セッションを設定する
    */
-  private setSession(session: Session) {
+  private setSession(session: OAuthSession) {
     this.session = session;
   }
 

@@ -1,12 +1,12 @@
 import { FitbitScope } from '../../types';
 import { parseFitbitScope } from '../../utils/types.utils';
 
-export interface Session {
+export interface OAuthSession {
   state: string;
   codeVerifier: string;
-  codeChallenge: string;
-  challengeMethod: string;
-  redirectUrl: string;
+  codeChallenge?: string;
+  challengeMethod?: string;
+  redirectUrl?: string;
 }
 
 /**
