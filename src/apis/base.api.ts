@@ -1,5 +1,6 @@
 import { FITBIT_API_BASE_URL } from '../constants';
 import { FitbitScope } from '../types';
+import { ResponseError } from '../models';
 
 interface RequestOptions extends RequestInit {
   accessToken?: string;
@@ -12,22 +13,11 @@ export interface TokenRequestOptions extends RequestOptions {
   accessToken: string;
 }
 
-export class ResponseError extends Error {
-  override name = 'ResponseError';
-
-  constructor(
-    public response: Response,
-    msg?: string,
-  ) {
-    super(msg);
-  }
-}
-
 export abstract class BaseApi {
   /**
-   * 必要なスコープを返す
+   * 必要なスコープ
    */
-  abstract getScope(): FitbitScope | null;
+  abstract scope: FitbitScope | null;
 
   protected async fetchAPI(
     path: string,

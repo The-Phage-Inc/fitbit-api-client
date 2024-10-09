@@ -5,14 +5,15 @@ import {
   PartialAuthToken,
   StepsResponse,
 } from './models';
-import { activityApi, heartRateApi, oauthApi } from './apis';
+import { activityApi, heartRateApi, oauthApi, sleepApi } from './apis';
 import { CODE_CHALLENGE_METHOD, FITBIT_AUTH_URL } from './constants';
 import {
   generateCodeChallenge,
   generateCodeVerifier,
   generateState,
 } from './utils/oauth.utils';
-import { DATE, DetailLevel, FitbitScope } from './types';
+import { UtcDate, DetailLevel, FitbitScope, MinuteDetailLevel } from './types';
+import { CaloriesResponse } from './models/activities/calories';
 
 type Props = {
   clientId: string;
@@ -51,6 +52,10 @@ export class FitbitClient {
     };
     this.activity = {
       getStepsIntraday: this.getStepsIntraday.bind(this),
+      getCaloriesIntraday: this.getCaloriesIntraday.bind(this),
+    };
+    this.sleep = {
+      getSleepLog: this.getSleepLog.bind(this),
     };
   }
 
@@ -76,16 +81,25 @@ export class FitbitClient {
 
   public heartRate: {
     getHeartRateIntraday: (
-      utcDate: DATE,
+      utcDate: UtcDate,
       detailLevel: DetailLevel,
     ) => Promise<HeartRateResponse>;
   };
 
   public activity: {
     getStepsIntraday: (
-      utcDate: DATE,
-      detailLevel: '1min' | '5min' | '15min',
+      utcDate: UtcDate,
+      detailLevel: MinuteDetailLevel,
     ) => Promise<StepsResponse>;
+    getCaloriesIntraday: (
+      utcDate: UtcDate,
+      detailLevel: MinuteDetailLevel,
+    ) => Promise<CaloriesResponse>;
+  };
+
+  public sleep: {
+    // FIXME
+    getSleepLog: (utcDate: UtcDate) => Promise<unknown>;
   };
 
   /**
@@ -218,7 +232,7 @@ export class FitbitClient {
   }
 
   private async getHeartRateIntraday(
-    utcDate: DATE,
+    utcDate: UtcDate,
     detailLevel: DetailLevel,
   ): Promise<HeartRateResponse> {
     const accessToken = await this.auth.getAccessToken();
@@ -232,14 +246,38 @@ export class FitbitClient {
   }
 
   private async getStepsIntraday(
-    utcDate: DATE,
-    detailLevel: '1min' | '5min' | '15min',
+    utcDate: UtcDate,
+    detailLevel: MinuteDetailLevel,
   ): Promise<StepsResponse> {
     const accessToken = await this.auth.getAccessToken();
     return await activityApi.getStepsIntradayByDate(
       {
         utcDate: utcDate,
         detailLevel: detailLevel,
+      },
+      { accessToken },
+    );
+  }
+
+  private async getCaloriesIntraday(
+    utcDate: UtcDate,
+    detailLevel: MinuteDetailLevel,
+  ): Promise<CaloriesResponse> {
+    const accessToken = await this.auth.getAccessToken();
+    return await activityApi.getCaloriesIntradayByDate(
+      {
+        utcDate: utcDate,
+        detailLevel: detailLevel,
+      },
+      { accessToken },
+    );
+  }
+
+  private async getSleepLog(utcDate: UtcDate): Promise<unknown> {
+    const accessToken = await this.auth.getAccessToken();
+    return await sleepApi.getSleepLogByDate(
+      {
+        utcDate: utcDate,
       },
       { accessToken },
     );

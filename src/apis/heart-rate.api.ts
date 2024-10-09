@@ -1,14 +1,14 @@
 import { BaseApi, TokenRequestOptions } from './base.api';
-import { DATE, DetailLevel } from '../types';
+import { UtcDate, DetailLevel } from '../types';
 import { HeartRateResponse, HeartRateResponseFromJson } from '../models';
 
 interface GetHeartRateIntradayByDateRequest {
-  utcDate: DATE;
+  utcDate: UtcDate;
   detailLevel: DetailLevel;
 }
 
 export class HeartRateApi extends BaseApi {
-  getScope = () => 'heartrate' as const;
+  override scope = 'heartrate' as const;
 
   /**
    * 心拍数取得API

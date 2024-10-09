@@ -19,5 +19,8 @@ export function exists(json: any, key: string) {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function get<T>(obj: any, key: string): T {
+  if (!exists(obj, key)) {
+    throw new Error(`Key not found: ${key} in ${JSON.stringify(obj)}`);
+  }
   return obj[key] as T;
 }

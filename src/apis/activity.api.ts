@@ -1,14 +1,18 @@
 import { BaseApi, TokenRequestOptions } from './base.api';
 import { StepsResponse, StepsResponseFromJson } from '../models';
-import { DATE } from '../types';
+import { MinuteDetailLevel, UtcDate } from '../types';
+import {
+  CaloriesResponse,
+  CaloriesResponseFromJson,
+} from '../models/activities/calories';
 
 interface GetActivityIntradayByDateRequest {
-  utcDate: DATE;
-  detailLevel: '1min' | '5min' | '15min';
+  utcDate: UtcDate;
+  detailLevel: MinuteDetailLevel;
 }
 
 export class ActivityApi extends BaseApi {
-  getScope = () => 'activity' as const;
+  override scope = 'activity' as const;
 
   /**
    * 歩数記録取得API
@@ -25,6 +29,17 @@ export class ActivityApi extends BaseApi {
       options,
     );
     return StepsResponseFromJson(request.utcDate, response);
+  }
+
+  async getCaloriesIntradayByDate(
+    request: GetActivityIntradayByDateRequest,
+    options: TokenRequestOptions,
+  ): Promise<CaloriesResponse> {
+    const response = await this.getActivityIntradayByDate(
+      { ...request, resource: 'calories' },
+      options,
+    );
+    return CaloriesResponseFromJson(request.utcDate, response);
   }
 
   /**
