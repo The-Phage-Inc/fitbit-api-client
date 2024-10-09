@@ -3,6 +3,7 @@ import {
   HeartRateResponse,
   OAuthSession,
   PartialAuthToken,
+  SleepResponse,
   StepsResponse,
 } from './models';
 import { activityApi, heartRateApi, oauthApi, sleepApi } from './apis';
@@ -13,7 +14,7 @@ import {
   generateState,
 } from './utils/oauth.utils';
 import { UtcDate, DetailLevel, FitbitScope, MinuteDetailLevel } from './types';
-import { CaloriesResponse } from './models/activities/calories';
+import { CaloriesResponse } from './models';
 
 type Props = {
   clientId: string;
@@ -98,8 +99,7 @@ export class FitbitClient {
   };
 
   public sleep: {
-    // FIXME
-    getSleepLog: (utcDate: UtcDate) => Promise<unknown>;
+    getSleepLog: (utcDate: UtcDate) => Promise<SleepResponse>;
   };
 
   /**
@@ -273,7 +273,7 @@ export class FitbitClient {
     );
   }
 
-  private async getSleepLog(utcDate: UtcDate): Promise<unknown> {
+  private async getSleepLog(utcDate: UtcDate): Promise<SleepResponse> {
     const accessToken = await this.auth.getAccessToken();
     return await sleepApi.getSleepLogByDate(
       {
