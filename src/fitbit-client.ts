@@ -5,7 +5,7 @@ import {
   PartialAuthToken,
   StepsResponse,
 } from './models';
-import { activityApi, heartRateApi, oauthApi } from './apis';
+import { activityApi, heartRateApi, oauthApi, sleepApi } from './apis';
 import { CODE_CHALLENGE_METHOD, FITBIT_AUTH_URL } from './constants';
 import {
   generateCodeChallenge,
@@ -13,6 +13,7 @@ import {
   generateState,
 } from './utils/oauth.utils';
 import { UtcDate, DetailLevel, FitbitScope, MinuteDetailLevel } from './types';
+import { CaloriesResponse } from './models/activities/calories';
 
 type Props = {
   clientId: string;
@@ -51,6 +52,10 @@ export class FitbitClient {
     };
     this.activity = {
       getStepsIntraday: this.getStepsIntraday.bind(this),
+      getCaloriesIntraday: this.getCaloriesIntraday.bind(this),
+    };
+    this.sleep = {
+      getSleepLog: this.getSleepLog.bind(this),
     };
   }
 
@@ -86,6 +91,15 @@ export class FitbitClient {
       utcDate: UtcDate,
       detailLevel: MinuteDetailLevel,
     ) => Promise<StepsResponse>;
+    getCaloriesIntraday: (
+      utcDate: UtcDate,
+      detailLevel: MinuteDetailLevel,
+    ) => Promise<CaloriesResponse>;
+  };
+
+  public sleep: {
+    // FIXME
+    getSleepLog: (utcDate: UtcDate) => Promise<unknown>;
   };
 
   /**
@@ -240,6 +254,30 @@ export class FitbitClient {
       {
         utcDate: utcDate,
         detailLevel: detailLevel,
+      },
+      { accessToken },
+    );
+  }
+
+  private async getCaloriesIntraday(
+    utcDate: UtcDate,
+    detailLevel: MinuteDetailLevel,
+  ): Promise<CaloriesResponse> {
+    const accessToken = await this.auth.getAccessToken();
+    return await activityApi.getCaloriesIntradayByDate(
+      {
+        utcDate: utcDate,
+        detailLevel: detailLevel,
+      },
+      { accessToken },
+    );
+  }
+
+  private async getSleepLog(utcDate: UtcDate): Promise<unknown> {
+    const accessToken = await this.auth.getAccessToken();
+    return await sleepApi.getSleepLogByDate(
+      {
+        utcDate: utcDate,
       },
       { accessToken },
     );

@@ -31,6 +31,7 @@ app.get('/auth', (req, res) => {
     'weight',
     'activity',
     'heartrate',
+    'sleep',
   ]);
 
   res.redirect(authorizationUrl);
