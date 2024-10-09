@@ -8,7 +8,7 @@ export interface SleepResponse {
   /**
    * 睡眠のデータ一覧
    */
-  sleep: SleepData[];
+  sleeps: SleepData[];
   /**
    * 睡眠のサマリー
    */
@@ -16,11 +16,11 @@ export interface SleepResponse {
 }
 
 export function SleepResponseFromJson(json: unknown): SleepResponse {
-  const sleep = get<unknown[]>(json, 'sleep').map((data) =>
+  const sleeps = get<unknown[]>(json, 'sleep').map((data) =>
     SleepDataFromJson(data),
   );
   return {
-    sleep,
+    sleeps,
     summary: SleepSummaryFromJson(get<unknown>(json, 'summary')),
   };
 }
