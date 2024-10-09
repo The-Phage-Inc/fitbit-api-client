@@ -116,10 +116,14 @@ export interface SleepLevels {
   /**
    * 睡眠レベルのサマリ
    */
-  summary: SleepLevelSummary;
+  summary: SleepLevelSummaryStages | SleepLevelSummaryClassic;
 }
 
 function SleepLevelsFromJson(json: unknown): SleepLevels {
+  const summaryJson = get<unknown>(json, 'summary');
+  const summary = exists(summaryJson, 'asleep')
+    ? SleepLevelSummaryClassicFromJson(summaryJson)
+    : SleepLevelSummaryStagesFromJson(summaryJson);
   const shortData = exists(json, 'shortData')
     ? get<unknown[]>(json, 'shortData').map((data) =>
         SleepLevelDataFromJson(data),
@@ -130,7 +134,7 @@ function SleepLevelsFromJson(json: unknown): SleepLevels {
       SleepLevelDataFromJson(data),
     ),
     shortData,
-    summary: SleepLevelSummaryFromJsonFromJson(get<unknown>(json, 'summary')),
+    summary,
   };
 }
 
@@ -161,36 +165,72 @@ function SleepLevelDataFromJson(json: unknown): SleepLevelData {
   };
 }
 
-/**
- * 睡眠レベルのサマリー
- */
-export interface SleepLevelSummary {
-  deep: SleepLevelSummaryItem;
-  light: SleepLevelSummaryItem;
-  rem: SleepLevelSummaryItem;
-  wake: SleepLevelSummaryItem;
+export interface SleepLevelSummaryClassic {
+  asleep: SleepLevelSummaryClassicItem;
+  awake: SleepLevelSummaryClassicItem;
+  restless: SleepLevelSummaryClassicItem;
 }
 
-function SleepLevelSummaryFromJsonFromJson(json: unknown): SleepLevelSummary {
+function SleepLevelSummaryClassicFromJson(
+  json: unknown,
+): SleepLevelSummaryClassic {
   return {
-    deep: SleepLevelSummaryItemFromJson(get<unknown>(json, 'deep')),
-    light: SleepLevelSummaryItemFromJson(get<unknown>(json, 'light')),
-    rem: SleepLevelSummaryItemFromJson(get<unknown>(json, 'rem')),
-    wake: SleepLevelSummaryItemFromJson(get<unknown>(json, 'wake')),
+    asleep: SleepLevelSummaryClassicItemFromJson(get<unknown>(json, 'asleep')),
+    awake: SleepLevelSummaryClassicItemFromJson(get<unknown>(json, 'awake')),
+    restless: SleepLevelSummaryClassicItemFromJson(
+      get<unknown>(json, 'restless'),
+    ),
   };
 }
 
-export interface SleepLevelSummaryItem {
+/**
+ * 睡眠レベルのサマリー
+ */
+export interface SleepLevelSummaryStages {
+  deep: SleepLevelSummaryStagesItem;
+  light: SleepLevelSummaryStagesItem;
+  rem: SleepLevelSummaryStagesItem;
+  wake: SleepLevelSummaryStagesItem;
+}
+
+function SleepLevelSummaryStagesFromJson(
+  json: unknown,
+): SleepLevelSummaryStages {
+  return {
+    deep: SleepLevelSummaryStagesItemFromJson(get<unknown>(json, 'deep')),
+    light: SleepLevelSummaryStagesItemFromJson(get<unknown>(json, 'light')),
+    rem: SleepLevelSummaryStagesItemFromJson(get<unknown>(json, 'rem')),
+    wake: SleepLevelSummaryStagesItemFromJson(get<unknown>(json, 'wake')),
+  };
+}
+
+export interface SleepLevelSummaryStagesItem {
   count: number;
   minutes: number;
   thirtyDayAvgMinutes: number;
 }
 
-function SleepLevelSummaryItemFromJson(json: unknown): SleepLevelSummaryItem {
+function SleepLevelSummaryStagesItemFromJson(
+  json: unknown,
+): SleepLevelSummaryStagesItem {
   return {
     count: get<number>(json, 'count'),
     minutes: get<number>(json, 'minutes'),
     thirtyDayAvgMinutes: get<number>(json, 'thirtyDayAvgMinutes'),
+  };
+}
+
+export interface SleepLevelSummaryClassicItem {
+  count: number;
+  minutes: number;
+}
+
+function SleepLevelSummaryClassicItemFromJson(
+  json: unknown,
+): SleepLevelSummaryClassicItem {
+  return {
+    count: get<number>(json, 'count'),
+    minutes: get<number>(json, 'minutes'),
   };
 }
 
