@@ -146,11 +146,11 @@ export interface HeartRateZone {
   /**
    * このゾーンで過ごした時間（分）
    */
-  minutes: number;
+  minutes?: number;
   /**
    * このゾーンにいた間に消費されたカロリー
    */
-  caloriesOut: number;
+  caloriesOut?: number;
 }
 
 function HeartRateZoneFromJson(json: unknown): HeartRateZone {
@@ -158,7 +158,9 @@ function HeartRateZoneFromJson(json: unknown): HeartRateZone {
     name: get<ZoneName>(json, 'name'),
     min: get<number>(json, 'min'),
     max: get<number>(json, 'max'),
-    minutes: get<number>(json, 'minutes'),
-    caloriesOut: get<number>(json, 'caloriesOut'),
+    minutes: exists(json, 'minutes') ? get<number>(json, 'minutes') : undefined,
+    caloriesOut: exists(json, 'caloriesOut')
+      ? get<number>(json, 'caloriesOut')
+      : undefined,
   };
 }
