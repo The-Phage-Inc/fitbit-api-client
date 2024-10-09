@@ -37,3 +37,6 @@ export const FITBIT_SCOPES = [
   TEMPERATURE_SCOPE,
   WEIGHT_SCOPE,
 ] as const;
+
+export const STAGES_SLEEP_LEVELS = ['deep', 'light', 'rem', 'wake'] as const;
+export const CLASSIC_SLEEP_LEVELS = ['restless', 'asleep', 'awake'] as const;

@@ -1,5 +1,5 @@
-import { get } from '../utils/types.utils';
-import { UtcDate } from '../types';
+import { exists, get } from '../utils/types.utils';
+import { SleepLevel, UtcDate } from '../types';
 
 /**
  * 睡眠データのレスポンス
@@ -46,8 +46,12 @@ export interface SleepData {
   endTime: Date;
   /**
    * 睡眠の情報コード
+   * 0 = 睡眠ログを生成するのに十分なデータ。
+   * 1 = 心拍数データが不十分です。
+   * 2 = 睡眠時間が短すぎます（3 時間未満）。
+   * 3 = サーバー側の問題。
    */
-  infoCode: number;
+  infoCode: 0 | 1 | 2 | 3;
   /**
    * メインの睡眠かどうか
    */
@@ -80,7 +84,7 @@ function SleepDataFromJson(json: unknown): SleepData {
     duration: get<number>(json, 'duration'),
     efficiency: get<number>(json, 'efficiency'),
     endTime: new Date(get<string>(json, 'endTime')),
-    infoCode: get<number>(json, 'infoCode'),
+    infoCode: get<0 | 1 | 2 | 3>(json, 'infoCode'),
     isMainSleep: get<boolean>(json, 'isMainSleep'),
     levels: SleepLevelsFromJson(get<unknown>(json, 'levels')),
     logId: get<bigint>(json, 'logId'),
@@ -105,8 +109,10 @@ export interface SleepLevels {
   data: SleepLevelData[];
   /**
    * 短いデータセット
+   * ※typeがstagesの場合のみ含まれます。
+   * @type {SleepLevelData[]}
    */
-  shortData: SleepLevelData[];
+  shortData?: SleepLevelData[];
   /**
    * 睡眠レベルのサマリ
    */
@@ -114,13 +120,16 @@ export interface SleepLevels {
 }
 
 function SleepLevelsFromJson(json: unknown): SleepLevels {
+  const shortData = exists(json, 'shortData')
+    ? get<unknown[]>(json, 'shortData').map((data) =>
+        SleepLevelDataFromJson(data),
+      )
+    : undefined;
   return {
     data: get<unknown[]>(json, 'data').map((data) =>
       SleepLevelDataFromJson(data),
     ),
-    shortData: get<unknown[]>(json, 'shortData').map((data) =>
-      SleepLevelDataFromJson(data),
-    ),
+    shortData,
     summary: SleepLevelSummaryFromJsonFromJson(get<unknown>(json, 'summary')),
   };
 }
@@ -130,9 +139,10 @@ function SleepLevelsFromJson(json: unknown): SleepLevels {
  */
 export interface SleepLevelData {
   /**
-   * ステージ（deep, light, rem, wake）
+   * 睡眠レベル
+   * @type {SleepLevel}
    */
-  level: 'deep' | 'light' | 'rem' | 'wake';
+  level: SleepLevel;
   /**
    * ステージの開始時間
    */
@@ -145,7 +155,7 @@ export interface SleepLevelData {
 
 function SleepLevelDataFromJson(json: unknown): SleepLevelData {
   return {
-    level: get<'deep' | 'light' | 'rem' | 'wake'>(json, 'level'),
+    level: get<SleepLevel>(json, 'level'),
     dateTime: new Date(get<string>(json, 'dateTime')),
     seconds: get<number>(json, 'seconds'),
   };
@@ -190,8 +200,9 @@ function SleepLevelSummaryItemFromJson(json: unknown): SleepLevelSummaryItem {
 export interface SleepSummary {
   /**
    * 睡眠ステージのサマリー
+   * ※typeがstagesの場合のみ含まれます。
    */
-  stages: SleepSummaryStages;
+  stages?: SleepSummaryStages;
   /**
    * 合計睡眠時間（ミリ秒）
    */
@@ -204,8 +215,11 @@ export interface SleepSummary {
 }
 
 function SleepSummaryFromJson(json: unknown): SleepSummary {
+  const stages = exists(json, 'stages')
+    ? SleepSummaryStagesFromJson(get<unknown>(json, 'stages'))
+    : undefined;
   return {
-    stages: SleepSummaryStagesFromJson(get<unknown>(json, 'stages')),
+    stages,
     totalMinutesAsleep: get<number>(json, 'totalMinutesAsleep'),
     totalSleepRecords: get<number>(json, 'totalSleepRecords'),
     totalTimeInBed: get<number>(json, 'totalTimeInBed'),
