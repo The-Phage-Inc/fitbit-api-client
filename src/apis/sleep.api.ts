@@ -17,9 +17,17 @@ export class SleepApi extends BaseApi {
     request: GetSleepByDateRequest,
     options: TokenRequestOptions,
   ): Promise<SleepResponse> {
+    return SleepResponseFromJson(
+      await this.getSleepLogByDateRaw(request, options),
+    );
+  }
+
+  async getSleepLogByDateRaw(
+    request: GetSleepByDateRequest,
+    options: TokenRequestOptions,
+  ): Promise<unknown> {
     const { utcDate } = request;
     const path = `/1.2/user/-/sleep/date/${utcDate}.json`;
-    const response = await this.get(path, options);
-    return SleepResponseFromJson(response);
+    return this.get(path, options);
   }
 }

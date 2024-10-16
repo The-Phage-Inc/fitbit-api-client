@@ -21,8 +21,18 @@ export class HeartRateApi extends BaseApi {
     options: TokenRequestOptions,
   ): Promise<HeartRateResponse> {
     const { utcDate, detailLevel } = request;
+    return HeartRateResponseFromJson(
+      utcDate,
+      await this.getHeartRateIntradayByDateRaw(request, options),
+    );
+  }
+
+  async getHeartRateIntradayByDateRaw(
+    request: GetHeartRateIntradayByDateRequest,
+    options: TokenRequestOptions,
+  ): Promise<unknown> {
+    const { utcDate, detailLevel } = request;
     const path = `/1/user/-/activities/heart/date/${utcDate}/1d/${detailLevel}.json?timezone=UTC`;
-    const response = await this.get(path, options);
-    return HeartRateResponseFromJson(utcDate, response);
+    return this.get(path, options);
   }
 }

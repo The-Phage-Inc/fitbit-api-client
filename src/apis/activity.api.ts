@@ -1,10 +1,7 @@
 import { BaseApi, TokenRequestOptions } from './base.api';
 import { StepsResponse, StepsResponseFromJson } from '../models';
 import { MinuteDetailLevel, UtcDate } from '../types';
-import {
-  CaloriesResponse,
-  CaloriesResponseFromJson,
-} from '../models/activities/calories';
+import { CaloriesResponse, CaloriesResponseFromJson } from '../models';
 
 interface GetActivityIntradayByDateRequest {
   utcDate: UtcDate;
@@ -16,7 +13,6 @@ export class ActivityApi extends BaseApi {
 
   /**
    * 歩数記録取得API
-   * https://dev.fitbit.com/build/reference/web-api/intraday/get-activity-intraday-by-date/
    * @param request
    * @param options
    */
@@ -24,22 +20,45 @@ export class ActivityApi extends BaseApi {
     request: GetActivityIntradayByDateRequest,
     options: TokenRequestOptions,
   ): Promise<StepsResponse> {
-    const response = await this.getActivityIntradayByDate(
+    return StepsResponseFromJson(
+      request.utcDate,
+      await this.getStepsIntradayByDateRaw(request, options),
+    );
+  }
+
+  async getStepsIntradayByDateRaw(
+    request: GetActivityIntradayByDateRequest,
+    options: TokenRequestOptions,
+  ): Promise<unknown> {
+    return this.getActivityIntradayByDate(
       { ...request, resource: 'steps' },
       options,
     );
-    return StepsResponseFromJson(request.utcDate, response);
   }
 
+  /**
+   * カロリー記録取得API
+   * @param request
+   * @param options
+   */
   async getCaloriesIntradayByDate(
     request: GetActivityIntradayByDateRequest,
     options: TokenRequestOptions,
   ): Promise<CaloriesResponse> {
-    const response = await this.getActivityIntradayByDate(
+    return CaloriesResponseFromJson(
+      request.utcDate,
+      await this.getCaloriesIntradayByDateRaw(request, options),
+    );
+  }
+
+  async getCaloriesIntradayByDateRaw(
+    request: GetActivityIntradayByDateRequest,
+    options: TokenRequestOptions,
+  ): Promise<unknown> {
+    return this.getActivityIntradayByDate(
       { ...request, resource: 'calories' },
       options,
     );
-    return CaloriesResponseFromJson(request.utcDate, response);
   }
 
   /**
