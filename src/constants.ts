@@ -8,7 +8,7 @@ export const CODE_CHALLENGE_METHOD = 'S256';
 export const ACTIVITY_SCOPE = 'activity';
 export const CARDIO_FITNESS_SCOPE = 'cardio_fitness';
 export const ELECTROCARDIOGRAM_SCOPE = 'electrocardiogram';
-export const HEATRATE_SCOPE = 'heartrate';
+export const HEARTRATE_SCOPE = 'heartrate';
 export const LOCATION_SCOPE = 'location';
 export const NUTRITION_SCOPE = 'nutrition';
 export const OXYGEN_SATURATION_SCOPE = 'oxygen_saturation';
@@ -25,7 +25,7 @@ export const FITBIT_SCOPES = [
   ACTIVITY_SCOPE,
   CARDIO_FITNESS_SCOPE,
   ELECTROCARDIOGRAM_SCOPE,
-  HEATRATE_SCOPE,
+  HEARTRATE_SCOPE,
   LOCATION_SCOPE,
   NUTRITION_SCOPE,
   OXYGEN_SATURATION_SCOPE,

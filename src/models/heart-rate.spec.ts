@@ -57,47 +57,49 @@ describe('HeartRate', () => {
         datasetType: 'minute',
       },
     };
-    const heatRateResponse = HeartRateResponseFromJson('2024-01-01', json);
-    expect(heatRateResponse.activitiesHeart[0].utcDate).toEqual('2024-01-01');
-    expect(heatRateResponse.activitiesHeart[0].value.restingHeartRate).toEqual(
+    const heartRateResponse = HeartRateResponseFromJson('2024-01-01', json);
+    expect(heartRateResponse.activitiesHeart[0].utcDate).toEqual('2024-01-01');
+    expect(heartRateResponse.activitiesHeart[0].value.restingHeartRate).toEqual(
       75,
     );
     expect(
-      heatRateResponse.activitiesHeart[0].value.heartRateZones.length,
+      heartRateResponse.activitiesHeart[0].value.heartRateZones.length,
     ).toEqual(4);
     expect(
-      heatRateResponse.activitiesHeart[0].value.heartRateZones[0].name,
+      heartRateResponse.activitiesHeart[0].value.heartRateZones[0].name,
     ).toEqual('Out of Range');
     expect(
-      heatRateResponse.activitiesHeart[0].value.heartRateZones[0].min,
+      heartRateResponse.activitiesHeart[0].value.heartRateZones[0].min,
     ).toEqual(30);
     expect(
-      heatRateResponse.activitiesHeart[0].value.heartRateZones[0].max,
+      heartRateResponse.activitiesHeart[0].value.heartRateZones[0].max,
     ).toEqual(122);
     expect(
-      heatRateResponse.activitiesHeart[0].value.heartRateZones[0].minutes,
+      heartRateResponse.activitiesHeart[0].value.heartRateZones[0].minutes,
     ).toEqual(1440);
     expect(
-      heatRateResponse.activitiesHeart[0].value.heartRateZones[0].caloriesOut,
+      heartRateResponse.activitiesHeart[0].value.heartRateZones[0].caloriesOut,
     ).toEqual(1796.4519);
 
-    expect(heatRateResponse.activitiesHeartIntraday?.dataset.length).toEqual(2);
+    expect(heartRateResponse.activitiesHeartIntraday?.dataset.length).toEqual(
+      2,
+    );
     expect(
-      heatRateResponse.activitiesHeartIntraday?.dataset[0].dateTime,
+      heartRateResponse.activitiesHeartIntraday?.dataset[0].dateTime,
     ).toEqual(new Date('2024-01-01T03:44:00.000Z'));
-    expect(heatRateResponse.activitiesHeartIntraday?.dataset[0].value).toEqual(
+    expect(heartRateResponse.activitiesHeartIntraday?.dataset[0].value).toEqual(
       77,
     );
     expect(
-      heatRateResponse.activitiesHeartIntraday?.dataset[1].dateTime,
+      heartRateResponse.activitiesHeartIntraday?.dataset[1].dateTime,
     ).toEqual(new Date('2024-01-01T16:40:00.000Z'));
-    expect(heatRateResponse.activitiesHeartIntraday?.dataset[1].value).toEqual(
+    expect(heartRateResponse.activitiesHeartIntraday?.dataset[1].value).toEqual(
       85,
     );
-    expect(heatRateResponse.activitiesHeartIntraday?.datasetInterval).toEqual(
+    expect(heartRateResponse.activitiesHeartIntraday?.datasetInterval).toEqual(
       1,
     );
-    expect(heatRateResponse.activitiesHeartIntraday?.datasetType).toEqual(
+    expect(heartRateResponse.activitiesHeartIntraday?.datasetType).toEqual(
       'minute',
     );
   });
@@ -143,29 +145,29 @@ describe('HeartRate', () => {
         },
       ],
     };
-    const heatRateResponse = HeartRateResponseFromJson('2024-01-01', json);
-    expect(heatRateResponse.activitiesHeart[0].utcDate).toEqual('2024-01-01');
+    const heartRateResponse = HeartRateResponseFromJson('2024-01-01', json);
+    expect(heartRateResponse.activitiesHeart[0].utcDate).toEqual('2024-01-01');
     expect(
-      heatRateResponse.activitiesHeart[0].value.restingHeartRate,
+      heartRateResponse.activitiesHeart[0].value.restingHeartRate,
     ).toBeUndefined();
     expect(
-      heatRateResponse.activitiesHeart[0].value.heartRateZones.length,
+      heartRateResponse.activitiesHeart[0].value.heartRateZones.length,
     ).toEqual(4);
     expect(
-      heatRateResponse.activitiesHeart[0].value.heartRateZones[0].name,
+      heartRateResponse.activitiesHeart[0].value.heartRateZones[0].name,
     ).toEqual('Out of Range');
     expect(
-      heatRateResponse.activitiesHeart[0].value.heartRateZones[0].min,
+      heartRateResponse.activitiesHeart[0].value.heartRateZones[0].min,
     ).toEqual(30);
     expect(
-      heatRateResponse.activitiesHeart[0].value.heartRateZones[0].max,
+      heartRateResponse.activitiesHeart[0].value.heartRateZones[0].max,
     ).toEqual(122);
     expect(
-      heatRateResponse.activitiesHeart[0].value.heartRateZones[0].minutes,
+      heartRateResponse.activitiesHeart[0].value.heartRateZones[0].minutes,
     ).toEqual(1440);
     expect(
-      heatRateResponse.activitiesHeart[0].value.heartRateZones[0].caloriesOut,
+      heartRateResponse.activitiesHeart[0].value.heartRateZones[0].caloriesOut,
     ).toEqual(1796.4519);
-    expect(heatRateResponse.activitiesHeartIntraday).toBeUndefined();
+    expect(heartRateResponse.activitiesHeartIntraday).toBeUndefined();
   });
 });

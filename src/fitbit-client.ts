@@ -58,7 +58,7 @@ export class FitbitClient {
     };
     this.heartRate = {
       getHeartRateIntraday: this.getHeartRateIntraday.bind(this),
-      getHeatRateIntradayRaw: this.getHeartRateIntradayRaw.bind(this),
+      getHeartRateIntradayRaw: this.getHeartRateIntradayRaw.bind(this),
     };
     this.activity = {
       getStepsIntraday: this.getStepsIntraday.bind(this),
@@ -109,7 +109,7 @@ export class FitbitClient {
       utcDate: UtcDate,
       detailLevel: DetailLevel,
     ) => Promise<HeartRateResponse>;
-    getHeatRateIntradayRaw: (
+    getHeartRateIntradayRaw: (
       utcDate: UtcDate,
       detailLevel: DetailLevel,
     ) => Promise<unknown>;
