@@ -6,7 +6,14 @@ import {
   SleepResponse,
   StepsResponse,
 } from './models';
-import { activityApi, heartRateApi, oauthApi, sleepApi } from './apis';
+import {
+  activityApi,
+  heartRateApi,
+  oauthApi,
+  sleepApi,
+  temperatureApi,
+  spO2Api,
+} from './apis';
 import { CODE_CHALLENGE_METHOD, FITBIT_AUTH_URL } from './constants';
 import {
   generateCodeChallenge,
@@ -15,6 +22,7 @@ import {
 } from './utils/oauth.utils';
 import { UtcDate, DetailLevel, FitbitScope, MinuteDetailLevel } from './types';
 import { CaloriesResponse } from './models';
+import { SpO2IntradayResponse } from './models/spo2/spo2';
 
 type Props = {
   clientId: string;
@@ -57,10 +65,22 @@ export class FitbitClient {
       getStepsIntradayRaw: this.getStepsIntradayRaw.bind(this),
       getCaloriesIntraday: this.getCaloriesIntraday.bind(this),
       getCaloriesIntradayRaw: this.getCaloriesIntradayRaw.bind(this),
+      getDistanceIntradayRaw: this.getDistanceIntradayRaw.bind(this),
+      getElevationIntradayRaw: this.getElevationIntradayRaw.bind(this),
+      getFloorsIntradayRaw: this.getFloorsIntradayRaw.bind(this),
+      getSwimmingStrokesRaw: this.getSwimmingStrokesRaw.bind(this),
     };
     this.sleep = {
       getSleepLog: this.getSleepLog.bind(this),
       getSleepLogRaw: this.getSleepLogRaw.bind(this),
+    };
+    this.temperature = {
+      getTemperatureCoreSummaryRaw:
+        this.getTemperatureCoreSummaryRaw.bind(this),
+    };
+    this.spO2 = {
+      getSpO2Intraday: this.getSpO2Intraday.bind(this),
+      getSpO2IntradayRaw: this.getSpO2IntradayRaw.bind(this),
     };
   }
 
@@ -112,11 +132,36 @@ export class FitbitClient {
       utcDate: UtcDate,
       detailLevel: MinuteDetailLevel,
     ) => Promise<unknown>;
+    getDistanceIntradayRaw: (
+      utcDate: UtcDate,
+      detailLevel: MinuteDetailLevel,
+    ) => Promise<unknown>;
+    getElevationIntradayRaw: (
+      utcDate: UtcDate,
+      detailLevel: MinuteDetailLevel,
+    ) => Promise<unknown>;
+    getFloorsIntradayRaw: (
+      utcDate: UtcDate,
+      detailLevel: MinuteDetailLevel,
+    ) => Promise<unknown>;
+    getSwimmingStrokesRaw: (
+      utcDate: UtcDate,
+      detailLevel: MinuteDetailLevel,
+    ) => Promise<unknown>;
   };
 
   public sleep: {
     getSleepLog: (utcDate: UtcDate) => Promise<SleepResponse>;
     getSleepLogRaw: (utcDate: UtcDate) => Promise<unknown>;
+  };
+
+  public temperature: {
+    getTemperatureCoreSummaryRaw: (utcDate: UtcDate) => Promise<unknown>;
+  };
+
+  public spO2: {
+    getSpO2Intraday: (utcDate: UtcDate) => Promise<SpO2IntradayResponse>;
+    getSpO2IntradayRaw: (utcDate: UtcDate) => Promise<unknown>;
   };
 
   /**
@@ -332,6 +377,62 @@ export class FitbitClient {
     );
   }
 
+  private async getDistanceIntradayRaw(
+    utcDate: UtcDate,
+    detailLevel: MinuteDetailLevel,
+  ): Promise<unknown> {
+    const accessToken = await this.auth.getAccessToken();
+    return await activityApi.getDistanceIntradayByDateRaw(
+      {
+        utcDate: utcDate,
+        detailLevel: detailLevel,
+      },
+      { accessToken },
+    );
+  }
+
+  private async getElevationIntradayRaw(
+    utcDate: UtcDate,
+    detailLevel: MinuteDetailLevel,
+  ): Promise<unknown> {
+    const accessToken = await this.auth.getAccessToken();
+    return await activityApi.getElevationIntradayByDateRaw(
+      {
+        utcDate: utcDate,
+        detailLevel: detailLevel,
+      },
+      { accessToken },
+    );
+  }
+
+  private async getFloorsIntradayRaw(
+    utcDate: UtcDate,
+    detailLevel: MinuteDetailLevel,
+  ): Promise<unknown> {
+    const accessToken = await this.auth.getAccessToken();
+    return await activityApi.getFloorsIntradayByDateRaw(
+      {
+        utcDate: utcDate,
+        detailLevel: detailLevel,
+      },
+      { accessToken },
+    );
+  }
+
+  private async getSwimmingStrokesRaw(
+    utcDate: UtcDate,
+    detailLevel: MinuteDetailLevel,
+  ): Promise<unknown> {
+    const accessToken = await this.auth.getAccessToken();
+    return await activityApi.getSwimmingStrokesByDateRaw(
+      {
+        utcDate: utcDate,
+        detailLevel: detailLevel,
+      },
+      { accessToken },
+    );
+  }
+
   private async getSleepLog(utcDate: UtcDate): Promise<SleepResponse> {
     const accessToken = await this.auth.getAccessToken();
     return await sleepApi.getSleepLogByDate(
@@ -342,9 +443,43 @@ export class FitbitClient {
     );
   }
 
+  private async getTemperatureCoreSummaryRaw(
+    utcDate: UtcDate,
+  ): Promise<unknown> {
+    const accessToken = await this.auth.getAccessToken();
+    return await temperatureApi.getTemperatureCoreSummaryByDateRaw(
+      {
+        utcDate: utcDate,
+      },
+      { accessToken },
+    );
+  }
+
   private async getSleepLogRaw(utcDate: UtcDate): Promise<unknown> {
     const accessToken = await this.auth.getAccessToken();
     return await sleepApi.getSleepLogByDateRaw(
+      {
+        utcDate: utcDate,
+      },
+      { accessToken },
+    );
+  }
+
+  private async getSpO2Intraday(
+    utcDate: UtcDate,
+  ): Promise<SpO2IntradayResponse> {
+    const accessToken = await this.auth.getAccessToken();
+    return await spO2Api.getSpo2IntradayByDate(
+      {
+        utcDate: utcDate,
+      },
+      { accessToken },
+    );
+  }
+
+  private async getSpO2IntradayRaw(utcDate: UtcDate): Promise<unknown> {
+    const accessToken = await this.auth.getAccessToken();
+    return await spO2Api.getSpO2IntradayByDateRaw(
       {
         utcDate: utcDate,
       },

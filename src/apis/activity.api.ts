@@ -61,6 +61,46 @@ export class ActivityApi extends BaseApi {
     );
   }
 
+  async getDistanceIntradayByDateRaw(
+    request: GetActivityIntradayByDateRequest,
+    options: TokenRequestOptions,
+  ): Promise<unknown> {
+    return this.getActivityIntradayByDate(
+      { ...request, resource: 'distance' },
+      options,
+    );
+  }
+
+  async getElevationIntradayByDateRaw(
+    request: GetActivityIntradayByDateRequest,
+    options: TokenRequestOptions,
+  ): Promise<unknown> {
+    return this.getActivityIntradayByDate(
+      { ...request, resource: 'elevation' },
+      options,
+    );
+  }
+
+  async getFloorsIntradayByDateRaw(
+    request: GetActivityIntradayByDateRequest,
+    options: TokenRequestOptions,
+  ): Promise<unknown> {
+    return this.getActivityIntradayByDate(
+      { ...request, resource: 'floors' },
+      options,
+    );
+  }
+
+  async getSwimmingStrokesByDateRaw(
+    request: GetActivityIntradayByDateRequest,
+    options: TokenRequestOptions,
+  ): Promise<unknown> {
+    return this.getActivityIntradayByDate(
+      { ...request, resource: 'swimming-strokes' },
+      options,
+    );
+  }
+
   /**
    * ActivityAPI
    * https://dev.fitbit.com/build/reference/web-api/intraday/get-heartrate-intraday-by-date/
