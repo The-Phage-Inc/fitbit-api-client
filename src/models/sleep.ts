@@ -83,7 +83,7 @@ function SleepDataFromJson(json: unknown): SleepData {
     dateOfSleep: get<UtcDate>(json, 'dateOfSleep'),
     duration: get<number>(json, 'duration'),
     efficiency: get<number>(json, 'efficiency'),
-    endTime: new Date(get<string>(json, 'endTime')),
+    endTime: new Date(`${get<string>(json, 'endTime')}Z`),
     infoCode: get<0 | 1 | 2 | 3>(json, 'infoCode'),
     isMainSleep: get<boolean>(json, 'isMainSleep'),
     levels: SleepLevelsFromJson(get<unknown>(json, 'levels')),
@@ -93,7 +93,7 @@ function SleepDataFromJson(json: unknown): SleepData {
     minutesAsleep: get<number>(json, 'minutesAsleep'),
     minutesAwake: get<number>(json, 'minutesAwake'),
     minutesToFallAsleep: get<number>(json, 'minutesToFallAsleep'),
-    startTime: new Date(get<string>(json, 'startTime')),
+    startTime: new Date(`${get<string>(json, 'startTime')}Z`),
     timeInBed: get<number>(json, 'timeInBed'),
     type: get<'stages' | 'classic'>(json, 'type'),
   };
@@ -160,7 +160,7 @@ export interface SleepLevelData {
 function SleepLevelDataFromJson(json: unknown): SleepLevelData {
   return {
     level: get<SleepLevel>(json, 'level'),
-    dateTime: new Date(get<string>(json, 'dateTime')),
+    dateTime: new Date(`${get<string>(json, 'dateTime')}Z`),
     seconds: get<number>(json, 'seconds'),
   };
 }

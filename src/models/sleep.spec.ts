@@ -255,6 +255,18 @@ describe('Sleep', () => {
       wake: 55,
     });
     expect(sleepResponse.summary.totalSleepRecords).toEqual(1);
+    expect(sleepResponse.sleeps[0].startTime).toEqual(
+      new Date('2024-10-07T05:07:30.000Z'),
+    );
+    expect(sleepResponse.sleeps[0].endTime).toEqual(
+      new Date('2024-10-07T10:09:00.000Z'),
+    );
+    expect(sleepResponse.sleeps[0].levels.data[0].dateTime).toEqual(
+      new Date('2024-10-07T05:07:30.000Z'),
+    );
+    expect(sleepResponse.sleeps[0].levels.data[16].dateTime).toEqual(
+      new Date('2024-10-07T10:04:30.000Z'),
+    );
   });
 
   it('typeがClassicの場合', () => {
