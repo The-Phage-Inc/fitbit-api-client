@@ -1,10 +1,11 @@
 import { BaseApi, TokenRequestOptions } from './base.api';
 import { StepsResponse, StepsResponseFromJson } from '../models';
-import { MinuteDetailLevel, UtcDate } from '../types';
+import { MinuteDetailLevel } from '../types';
 import { CaloriesResponse, CaloriesResponseFromJson } from '../models';
+import { validateDateString } from '../utils/date.utils';
 
 interface GetActivityIntradayByDateRequest {
-  utcDate: UtcDate;
+  localDate: string;
   detailLevel: MinuteDetailLevel;
 }
 
@@ -14,14 +15,17 @@ export class ActivityApi extends BaseApi {
   /**
    * 歩数記録取得API
    * @param request
+   * @param offsetFromUTCMillis
    * @param options
    */
   async getStepsIntradayByDate(
     request: GetActivityIntradayByDateRequest,
+    offsetFromUTCMillis: number,
     options: TokenRequestOptions,
   ): Promise<StepsResponse> {
     return StepsResponseFromJson(
-      request.utcDate,
+      request.localDate,
+      offsetFromUTCMillis,
       await this.getStepsIntradayByDateRaw(request, options),
     );
   }
@@ -39,14 +43,17 @@ export class ActivityApi extends BaseApi {
   /**
    * カロリー記録取得API
    * @param request
+   * @param offsetFromUTCMillis
    * @param options
    */
   async getCaloriesIntradayByDate(
     request: GetActivityIntradayByDateRequest,
+    offsetFromUTCMillis: number,
     options: TokenRequestOptions,
   ): Promise<CaloriesResponse> {
     return CaloriesResponseFromJson(
-      request.utcDate,
+      request.localDate,
+      offsetFromUTCMillis,
       await this.getCaloriesIntradayByDateRaw(request, options),
     );
   }
@@ -119,8 +126,9 @@ export class ActivityApi extends BaseApi {
     },
     options: TokenRequestOptions,
   ): Promise<unknown> {
-    const { resource, utcDate, detailLevel } = request;
-    const path = `/1/user/-/activities/${resource}/date/${utcDate}/1d/${detailLevel}.json?timezone=UTC`;
+    const { resource, localDate, detailLevel } = request;
+    validateDateString(localDate);
+    const path = `/1/user/-/activities/${resource}/date/${localDate}/1d/${detailLevel}.json`;
     return this.get(path, options);
   }
 }
