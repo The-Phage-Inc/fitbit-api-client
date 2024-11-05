@@ -5,6 +5,10 @@ import { CaloriesResponse, CaloriesResponseFromJson } from '../models';
 import { validateDateString } from '../utils/date.utils';
 
 interface GetActivityIntradayByDateRequest {
+  /**
+   * 端末のタイムゾーンでの日付
+   * 'YYYY-MM-DD'
+   */
   localDate: string;
   detailLevel: MinuteDetailLevel;
 }

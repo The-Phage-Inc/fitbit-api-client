@@ -13,6 +13,7 @@ import {
   sleepApi,
   temperatureApi,
   spO2Api,
+  profileAPi,
 } from './apis';
 import { CODE_CHALLENGE_METHOD, FITBIT_AUTH_URL } from './constants';
 import {
@@ -20,9 +21,10 @@ import {
   generateCodeVerifier,
   generateState,
 } from './utils/oauth.utils';
-import { UtcDate, DetailLevel, FitbitScope, MinuteDetailLevel } from './types';
+import { DetailLevel, FitbitScope, MinuteDetailLevel } from './types';
 import { CaloriesResponse } from './models';
 import { SpO2IntradayResponse } from './models/spo2/spo2';
+import { ProfileResponse } from './models/profile';
 
 type Props = {
   clientId: string;
@@ -55,6 +57,10 @@ export class FitbitClient {
       getAuthorizationUrl: this.getAuthorizationUrl.bind(this),
       setSession: this.setSession.bind(this),
       handleOAuthCallback: this.handleOAuthCallback.bind(this),
+    };
+    this.profile = {
+      getProfileRaw: this.getProfileRaw.bind(this),
+      getProfile: this.getProfile.bind(this),
     };
     this.heartRate = {
       getHeartRateIntraday: this.getHeartRateIntraday.bind(this),
@@ -104,64 +110,78 @@ export class FitbitClient {
     handleOAuthCallback: (code: string, state: string) => Promise<AuthToken>;
   };
 
+  public profile: {
+    getProfileRaw: () => Promise<unknown>;
+    getProfile: () => Promise<ProfileResponse>;
+  };
+
   public heartRate: {
     getHeartRateIntraday: (
-      utcDate: UtcDate,
+      localDate: string,
+      offsetFromUTCMillis: number,
       detailLevel: DetailLevel,
     ) => Promise<HeartRateResponse>;
     getHeartRateIntradayRaw: (
-      utcDate: UtcDate,
+      localDate: string,
       detailLevel: DetailLevel,
     ) => Promise<unknown>;
   };
 
   public activity: {
     getStepsIntraday: (
-      utcDate: UtcDate,
+      localDate: string,
+      offsetFromUTCMillis: number,
       detailLevel: MinuteDetailLevel,
     ) => Promise<StepsResponse>;
     getStepsIntradayRaw: (
-      utcDate: UtcDate,
+      localDate: string,
       detailLevel: MinuteDetailLevel,
     ) => Promise<unknown>;
     getCaloriesIntraday: (
-      utcDate: UtcDate,
+      localDate: string,
+      offsetFromUTCMillis: number,
       detailLevel: MinuteDetailLevel,
     ) => Promise<CaloriesResponse>;
     getCaloriesIntradayRaw: (
-      utcDate: UtcDate,
+      localDate: string,
       detailLevel: MinuteDetailLevel,
     ) => Promise<unknown>;
     getDistanceIntradayRaw: (
-      utcDate: UtcDate,
+      localDate: string,
       detailLevel: MinuteDetailLevel,
     ) => Promise<unknown>;
     getElevationIntradayRaw: (
-      utcDate: UtcDate,
+      localDate: string,
       detailLevel: MinuteDetailLevel,
     ) => Promise<unknown>;
     getFloorsIntradayRaw: (
-      utcDate: UtcDate,
+      localDate: string,
       detailLevel: MinuteDetailLevel,
     ) => Promise<unknown>;
     getSwimmingStrokesRaw: (
-      utcDate: UtcDate,
+      localDate: string,
       detailLevel: MinuteDetailLevel,
     ) => Promise<unknown>;
   };
 
   public sleep: {
-    getSleepLog: (utcDate: UtcDate) => Promise<SleepResponse>;
-    getSleepLogRaw: (utcDate: UtcDate) => Promise<unknown>;
+    getSleepLog: (
+      localDate: string,
+      offsetFromUTCMillis: number,
+    ) => Promise<SleepResponse>;
+    getSleepLogRaw: (localDate: string) => Promise<unknown>;
   };
 
   public temperature: {
-    getTemperatureCoreSummaryRaw: (utcDate: UtcDate) => Promise<unknown>;
+    getTemperatureCoreSummaryRaw: (localDate: string) => Promise<unknown>;
   };
 
   public spO2: {
-    getSpO2Intraday: (utcDate: UtcDate) => Promise<SpO2IntradayResponse>;
-    getSpO2IntradayRaw: (utcDate: UtcDate) => Promise<unknown>;
+    getSpO2Intraday: (
+      localDate: string,
+      offsetFromUTCMillis: number,
+    ) => Promise<SpO2IntradayResponse>;
+    getSpO2IntradayRaw: (localDate: string) => Promise<unknown>;
   };
 
   /**
@@ -293,195 +313,217 @@ export class FitbitClient {
     return newToken;
   }
 
+  private async getProfileRaw(): Promise<unknown> {
+    const accessToken = await this.auth.getAccessToken();
+    return await profileAPi.getProfileRaw({ accessToken });
+  }
+
+  private async getProfile(): Promise<ProfileResponse> {
+    const accessToken = await this.auth.getAccessToken();
+    return await profileAPi.getProfile({ accessToken });
+  }
+
   private async getHeartRateIntraday(
-    utcDate: UtcDate,
+    localDate: string,
+    offsetFromUTCMillis: number,
     detailLevel: DetailLevel,
   ): Promise<HeartRateResponse> {
     const accessToken = await this.auth.getAccessToken();
     return await heartRateApi.getHeartRateIntradayByDate(
       {
-        utcDate: utcDate,
-        detailLevel: detailLevel,
+        localDate,
+        detailLevel,
       },
+      offsetFromUTCMillis,
       { accessToken },
     );
   }
 
   private async getHeartRateIntradayRaw(
-    utcDate: UtcDate,
+    localDate: string,
     detailLevel: DetailLevel,
   ): Promise<unknown> {
     const accessToken = await this.auth.getAccessToken();
     return await heartRateApi.getHeartRateIntradayByDateRaw(
       {
-        utcDate: utcDate,
-        detailLevel: detailLevel,
+        localDate,
+        detailLevel,
       },
       { accessToken },
     );
   }
 
   private async getStepsIntraday(
-    utcDate: UtcDate,
+    localDate: string,
+    offsetFromUTCMillis: number,
     detailLevel: MinuteDetailLevel,
   ): Promise<StepsResponse> {
     const accessToken = await this.auth.getAccessToken();
     return await activityApi.getStepsIntradayByDate(
       {
-        utcDate: utcDate,
-        detailLevel: detailLevel,
+        localDate,
+        detailLevel,
       },
+      offsetFromUTCMillis,
       { accessToken },
     );
   }
 
   private async getStepsIntradayRaw(
-    utcDate: UtcDate,
+    localDate: string,
     detailLevel: MinuteDetailLevel,
   ): Promise<unknown> {
     const accessToken = await this.auth.getAccessToken();
     return await activityApi.getStepsIntradayByDateRaw(
       {
-        utcDate: utcDate,
-        detailLevel: detailLevel,
+        localDate,
+        detailLevel,
       },
       { accessToken },
     );
   }
 
   private async getCaloriesIntraday(
-    utcDate: UtcDate,
+    localDate: string,
+    offsetFromUTCMillis: number,
     detailLevel: MinuteDetailLevel,
   ): Promise<CaloriesResponse> {
     const accessToken = await this.auth.getAccessToken();
     return await activityApi.getCaloriesIntradayByDate(
       {
-        utcDate: utcDate,
-        detailLevel: detailLevel,
+        localDate,
+        detailLevel,
       },
+      offsetFromUTCMillis,
       { accessToken },
     );
   }
 
   private async getCaloriesIntradayRaw(
-    utcDate: UtcDate,
+    localDate: string,
     detailLevel: MinuteDetailLevel,
   ): Promise<unknown> {
     const accessToken = await this.auth.getAccessToken();
     return await activityApi.getCaloriesIntradayByDateRaw(
       {
-        utcDate: utcDate,
-        detailLevel: detailLevel,
+        localDate,
+        detailLevel,
       },
       { accessToken },
     );
   }
 
   private async getDistanceIntradayRaw(
-    utcDate: UtcDate,
+    localDate: string,
     detailLevel: MinuteDetailLevel,
   ): Promise<unknown> {
     const accessToken = await this.auth.getAccessToken();
     return await activityApi.getDistanceIntradayByDateRaw(
       {
-        utcDate: utcDate,
-        detailLevel: detailLevel,
+        localDate,
+        detailLevel,
       },
       { accessToken },
     );
   }
 
   private async getElevationIntradayRaw(
-    utcDate: UtcDate,
+    localDate: string,
     detailLevel: MinuteDetailLevel,
   ): Promise<unknown> {
     const accessToken = await this.auth.getAccessToken();
     return await activityApi.getElevationIntradayByDateRaw(
       {
-        utcDate: utcDate,
-        detailLevel: detailLevel,
+        localDate,
+        detailLevel,
       },
       { accessToken },
     );
   }
 
   private async getFloorsIntradayRaw(
-    utcDate: UtcDate,
+    localDate: string,
     detailLevel: MinuteDetailLevel,
   ): Promise<unknown> {
     const accessToken = await this.auth.getAccessToken();
     return await activityApi.getFloorsIntradayByDateRaw(
       {
-        utcDate: utcDate,
-        detailLevel: detailLevel,
+        localDate,
+        detailLevel,
       },
       { accessToken },
     );
   }
 
   private async getSwimmingStrokesRaw(
-    utcDate: UtcDate,
+    localDate: string,
     detailLevel: MinuteDetailLevel,
   ): Promise<unknown> {
     const accessToken = await this.auth.getAccessToken();
     return await activityApi.getSwimmingStrokesByDateRaw(
       {
-        utcDate: utcDate,
-        detailLevel: detailLevel,
+        localDate,
+        detailLevel,
       },
       { accessToken },
     );
   }
 
-  private async getSleepLog(utcDate: UtcDate): Promise<SleepResponse> {
+  private async getSleepLog(
+    localDate: string,
+    offsetFromUTCMillis: number,
+  ): Promise<SleepResponse> {
     const accessToken = await this.auth.getAccessToken();
     return await sleepApi.getSleepLogByDate(
       {
-        utcDate: utcDate,
+        localDate,
       },
+      offsetFromUTCMillis,
       { accessToken },
     );
   }
 
   private async getTemperatureCoreSummaryRaw(
-    utcDate: UtcDate,
+    localDate: string,
   ): Promise<unknown> {
     const accessToken = await this.auth.getAccessToken();
     return await temperatureApi.getTemperatureCoreSummaryByDateRaw(
       {
-        utcDate: utcDate,
+        localDate,
       },
       { accessToken },
     );
   }
 
-  private async getSleepLogRaw(utcDate: UtcDate): Promise<unknown> {
+  private async getSleepLogRaw(localDate: string): Promise<unknown> {
     const accessToken = await this.auth.getAccessToken();
     return await sleepApi.getSleepLogByDateRaw(
       {
-        utcDate: utcDate,
+        localDate,
       },
       { accessToken },
     );
   }
 
   private async getSpO2Intraday(
-    utcDate: UtcDate,
+    localDate: string,
+    offsetFromUTCMillis: number,
   ): Promise<SpO2IntradayResponse> {
     const accessToken = await this.auth.getAccessToken();
     return await spO2Api.getSpo2IntradayByDate(
       {
-        utcDate: utcDate,
+        localDate,
       },
+      offsetFromUTCMillis,
       { accessToken },
     );
   }
 
-  private async getSpO2IntradayRaw(utcDate: UtcDate): Promise<unknown> {
+  private async getSpO2IntradayRaw(localDate: string): Promise<unknown> {
     const accessToken = await this.auth.getAccessToken();
     return await spO2Api.getSpO2IntradayByDateRaw(
       {
-        utcDate: utcDate,
+        localDate,
       },
       { accessToken },
     );
