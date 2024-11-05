@@ -27,11 +27,8 @@ export class SpO2Api extends BaseApi {
     options: TokenRequestOptions,
   ): Promise<SpO2IntradayResponse> {
     return SpO2IntradayResponseFromJson(
-      await this.getSpO2IntradayByDateRaw(
-        request,
-        offsetFromUTCMillis,
-        options,
-      ),
+      offsetFromUTCMillis,
+      await this.getSpO2IntradayByDateRaw(request, options),
     );
   }
 
