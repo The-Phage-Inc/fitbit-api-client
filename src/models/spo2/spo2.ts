@@ -1,23 +1,24 @@
-import { UtcDate } from '../../types';
 import { get } from '../../utils/types.utils';
+import { convertToOffsetDate } from '../../utils/date.utils';
 
 /**
- * 心拍数データのレスポンス
+ * 酸素飽和度のレスポンス
  */
 export interface SpO2IntradayResponse {
-  utcDate: UtcDate;
+  localDate: string;
   dataset: SpO2IntradayData[];
 }
 
 export function SpO2IntradayResponseFromJson(
+  offsetFromUTCMillis: number,
   json: unknown,
 ): SpO2IntradayResponse {
-  const utcDate = get<UtcDate>(json, 'dateTime');
+  const localDate = get<string>(json, 'dateTime');
   const dataset = get<unknown[]>(json, 'minutes').map((data) =>
-    SpO2IntradayDataFromJson(data),
+    SpO2IntradayDataFromJson(offsetFromUTCMillis, data),
   );
   return {
-    utcDate,
+    localDate,
     dataset,
   };
 }
@@ -35,9 +36,15 @@ export interface SpO2IntradayData {
   value: number;
 }
 
-function SpO2IntradayDataFromJson(json: unknown): SpO2IntradayData {
+function SpO2IntradayDataFromJson(
+  offsetFromUTCMillis: number,
+  json: unknown,
+): SpO2IntradayData {
   return {
-    dateTime: new Date(`${get<string>(json, 'minute')}Z`),
+    dateTime: convertToOffsetDate(
+      new Date(`${get<string>(json, 'minute')}Z`),
+      offsetFromUTCMillis,
+    ),
     value: get<number>(json, 'value'),
   };
 }

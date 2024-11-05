@@ -1,5 +1,6 @@
-import { DatasetType, UtcDate } from '../../types';
+import { DatasetType } from '../../types';
 import { exists, get } from '../../utils/types.utils';
+import { convertToOffsetDate } from '../../utils/date.utils';
 
 /**
  * カロリーのデータ
@@ -17,7 +18,8 @@ export interface CaloriesResponse {
 }
 
 export function CaloriesResponseFromJson(
-  utcDate: UtcDate,
+  localDate: string,
+  offsetFromUTCMillis: number,
   json: unknown,
 ): CaloriesResponse {
   const activitiesCalories = get<unknown[]>(json, 'activities-calories').map(
@@ -28,7 +30,8 @@ export function CaloriesResponseFromJson(
     'activities-calories-intraday',
   )
     ? ActivitiesCaloriesIntradayFromJson(
-        utcDate,
+        localDate,
+        offsetFromUTCMillis,
         get<unknown>(json, 'activities-calories-intraday'),
       )
     : undefined;
@@ -44,16 +47,16 @@ export interface CaloriesDailyData {
    */
   calories: number;
   /**
-   * UTCの日付
+   * 端末の日付
    * 'yyyy-MM-dd'
    */
-  utcDate: UtcDate;
+  localDate: string;
 }
 
 function CaloriesDailyDataFromJson(json: unknown): CaloriesDailyData {
   return {
     calories: get<number>(json, 'value'),
-    utcDate: get<UtcDate>(json, 'dateTime'),
+    localDate: get<string>(json, 'dateTime'),
   };
 }
 
@@ -77,12 +80,17 @@ export interface ActivitiesCaloriesIntraday {
 }
 
 function ActivitiesCaloriesIntradayFromJson(
-  utcDate: UtcDate,
+  localDate: string,
+  offsetFromUTCMillis: number,
   json: unknown,
 ): ActivitiesCaloriesIntraday {
   return {
     dataset: get<unknown[]>(json, 'dataset').map((data) =>
-      ActivitiesCaloriesIntradayDataFromJson(utcDate, data),
+      ActivitiesCaloriesIntradayDataFromJson(
+        localDate,
+        offsetFromUTCMillis,
+        data,
+      ),
     ),
     datasetInterval: get<number>(json, 'datasetInterval'),
     datasetType: get<DatasetType>(json, 'datasetType'),
@@ -106,11 +114,15 @@ export interface CaloriesIntradayData {
 }
 
 function ActivitiesCaloriesIntradayDataFromJson(
-  date: UtcDate,
+  localDate: string,
+  offsetFromUTCMillis: number,
   json: unknown,
 ): CaloriesIntradayData {
   return {
-    dateTime: get<Date>(json, 'time'),
+    dateTime: convertToOffsetDate(
+      new Date(`${localDate}T${get<string>(json, 'time')}Z`),
+      offsetFromUTCMillis,
+    ),
     calories: get<number>(json, 'value'),
   };
 }

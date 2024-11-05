@@ -1,5 +1,6 @@
-import { DatasetType, UtcDate } from '../../types';
+import { DatasetType } from '../../types';
 import { exists, get } from '../../utils/types.utils';
+import { convertToOffsetDate } from '../../utils/date.utils';
 
 /**
  * 歩数データのレスポンス
@@ -17,7 +18,8 @@ export interface StepsResponse {
 }
 
 export function StepsResponseFromJson(
-  utcDate: UtcDate,
+  localDate: string,
+  offsetFromUTCMillis: number,
   json: unknown,
 ): StepsResponse {
   const activitiesSteps = get<unknown[]>(json, 'activities-steps').map((data) =>
@@ -25,7 +27,8 @@ export function StepsResponseFromJson(
   );
   const activitiesStepsIntraday = exists(json, 'activities-steps-intraday')
     ? ActivitiesStepsIntradayFromJson(
-        utcDate,
+        localDate,
+        offsetFromUTCMillis,
         get<unknown>(json, 'activities-steps-intraday'),
       )
     : undefined;
@@ -41,16 +44,16 @@ export interface StepsDailyData {
    */
   steps: number;
   /**
-   * UTCの日付
+   * ローカル日付
    * 'yyyy-MM-dd'
    */
-  utcDate: UtcDate;
+  localDate: string;
 }
 
 function StepsDailyDataFromJson(json: unknown): StepsDailyData {
   return {
     steps: get<number>(json, 'value'),
-    utcDate: get<UtcDate>(json, 'dateTime'),
+    localDate: get<string>(json, 'dateTime'),
   };
 }
 
@@ -74,12 +77,13 @@ export interface ActivitiesStepsIntraday {
 }
 
 function ActivitiesStepsIntradayFromJson(
-  utcDate: UtcDate,
+  localDate: string,
+  offsetFromUTCMillis: number,
   json: unknown,
 ): ActivitiesStepsIntraday {
   return {
     dataset: get<unknown[]>(json, 'dataset').map((data) =>
-      StepsIntradayDataFromJson(utcDate, data),
+      StepsIntradayDataFromJson(localDate, offsetFromUTCMillis, data),
     ),
     datasetInterval: get<number>(json, 'datasetInterval'),
     datasetType: get<DatasetType>(json, 'datasetType'),
@@ -103,11 +107,15 @@ export interface StepsIntradayData {
 }
 
 function StepsIntradayDataFromJson(
-  utcDate: UtcDate,
+  localDate: string,
+  offsetFromUTCMillis: number,
   json: unknown,
 ): StepsIntradayData {
   return {
-    dateTime: new Date(`${utcDate}T${get<string>(json, 'time')}Z`),
+    dateTime: convertToOffsetDate(
+      new Date(`${localDate}T${get<string>(json, 'time')}Z`),
+      offsetFromUTCMillis,
+    ),
     steps: get<number>(json, 'value'),
   };
 }
