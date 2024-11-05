@@ -1,5 +1,6 @@
-import { DatasetType, UtcDate, ZoneName } from '../types';
+import { DatasetType, ZoneName } from '../types';
 import { exists, get } from '../utils/types.utils';
+import { convertToOffsetDate } from '../utils/date.utils';
 
 /**
  * 心拍数データのレスポンス
@@ -17,7 +18,8 @@ export interface HeartRateResponse {
 }
 
 export function HeartRateResponseFromJson(
-  utcDate: UtcDate,
+  localDate: string,
+  offsetFromUTCMillis: number,
   json: unknown,
 ): HeartRateResponse {
   const activitiesHeart = get<unknown[]>(json, 'activities-heart').map((data) =>
@@ -25,7 +27,8 @@ export function HeartRateResponseFromJson(
   );
   const activitiesHeartIntraday = exists(json, 'activities-heart-intraday')
     ? ActivitiesHeartIntradayFromJson(
-        utcDate,
+        localDate,
+        offsetFromUTCMillis,
         get<unknown>(json, 'activities-heart-intraday'),
       )
     : undefined;
@@ -37,10 +40,10 @@ export function HeartRateResponseFromJson(
 
 export interface HeartRateData {
   /**
-   * UTCの日付
+   * ローカル日付
    * 'yyyy-MM-dd'
    */
-  utcDate: UtcDate;
+  localDate: string;
   /**
    * 心拍数
    */
@@ -61,7 +64,7 @@ function HeartRateDataFromJson(json: unknown): HeartRateData {
     'customHeartRateZones',
   ).map((zone) => HeartRateZoneFromJson(zone));
   return {
-    utcDate: get<UtcDate>(json, 'dateTime'),
+    localDate: get<string>(json, 'dateTime'),
     value: {
       restingHeartRate: exists(value, 'restingHeartRate')
         ? get<number>(value, 'restingHeartRate')
@@ -92,12 +95,13 @@ export interface ActivitiesHeartIntraday {
 }
 
 function ActivitiesHeartIntradayFromJson(
-  utcDate: UtcDate,
+  localDate: string,
+  offsetFromUTCMillis: number,
   json: unknown,
 ): ActivitiesHeartIntraday {
   return {
     dataset: get<unknown[]>(json, 'dataset').map((data) =>
-      HeartRateIntradayDataFromJson(utcDate, data),
+      HeartRateIntradayDataFromJson(localDate, offsetFromUTCMillis, data),
     ),
     datasetInterval: get<number>(json, 'datasetInterval'),
     datasetType: get<DatasetType>(json, 'datasetType'),
@@ -121,11 +125,15 @@ export interface HeartRateIntradayData {
 }
 
 function HeartRateIntradayDataFromJson(
-  date: UtcDate,
+  localDate: string,
+  offsetFromUTCMillis: number,
   json: unknown,
 ): HeartRateIntradayData {
   return {
-    dateTime: new Date(`${date}T${get<string>(json, 'time')}Z`),
+    dateTime: convertToOffsetDate(
+      new Date(`${localDate}T${get<string>(json, 'time')}Z`),
+      offsetFromUTCMillis,
+    ),
     value: get<number>(json, 'value'),
   };
 }

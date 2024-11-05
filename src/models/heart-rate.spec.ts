@@ -2,6 +2,8 @@ import { HeartRateResponseFromJson } from './heart-rate';
 
 describe('HeartRate', () => {
   it('問題なく型変換出来ること', () => {
+    // Asia/Tokyoの場合
+    const offsetFromUTCMillis = 32400000;
     const json = {
       'activities-heart': [
         {
@@ -57,8 +59,14 @@ describe('HeartRate', () => {
         datasetType: 'minute',
       },
     };
-    const heartRateResponse = HeartRateResponseFromJson('2024-01-01', json);
-    expect(heartRateResponse.activitiesHeart[0].utcDate).toEqual('2024-01-01');
+    const heartRateResponse = HeartRateResponseFromJson(
+      '2024-01-01',
+      offsetFromUTCMillis,
+      json,
+    );
+    expect(heartRateResponse.activitiesHeart[0].localDate).toEqual(
+      '2024-01-01',
+    );
     expect(heartRateResponse.activitiesHeart[0].value.restingHeartRate).toEqual(
       75,
     );
@@ -86,13 +94,13 @@ describe('HeartRate', () => {
     );
     expect(
       heartRateResponse.activitiesHeartIntraday?.dataset[0].dateTime,
-    ).toEqual(new Date('2024-01-01T03:44:00.000Z'));
+    ).toEqual(new Date('2024-01-01T03:44:00.000+09:00'));
     expect(heartRateResponse.activitiesHeartIntraday?.dataset[0].value).toEqual(
       77,
     );
     expect(
       heartRateResponse.activitiesHeartIntraday?.dataset[1].dateTime,
-    ).toEqual(new Date('2024-01-01T16:40:00.000Z'));
+    ).toEqual(new Date('2024-01-01T16:40:00.000+09:00'));
     expect(heartRateResponse.activitiesHeartIntraday?.dataset[1].value).toEqual(
       85,
     );
@@ -105,6 +113,8 @@ describe('HeartRate', () => {
   });
 
   it('activities-heart-intradayやrestingHeartRateがない場合でも問題なく型変換出来ること', () => {
+    // Asia/Tokyoの場合
+    const offsetFromUTCMillis = 32400000;
     const json = {
       'activities-heart': [
         {
@@ -145,8 +155,14 @@ describe('HeartRate', () => {
         },
       ],
     };
-    const heartRateResponse = HeartRateResponseFromJson('2024-01-01', json);
-    expect(heartRateResponse.activitiesHeart[0].utcDate).toEqual('2024-01-01');
+    const heartRateResponse = HeartRateResponseFromJson(
+      '2024-01-01',
+      offsetFromUTCMillis,
+      json,
+    );
+    expect(heartRateResponse.activitiesHeart[0].localDate).toEqual(
+      '2024-01-01',
+    );
     expect(
       heartRateResponse.activitiesHeart[0].value.restingHeartRate,
     ).toBeUndefined();
