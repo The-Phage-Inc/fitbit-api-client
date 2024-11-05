@@ -17,11 +17,11 @@ export interface SleepResponse {
 }
 
 export function SleepResponseFromJson(
-  json: unknown,
   offsetFromUTCMillis: number,
+  json: unknown,
 ): SleepResponse {
   const sleeps = get<unknown[]>(json, 'sleep').map((data) =>
-    SleepDataFromJson(data, offsetFromUTCMillis),
+    SleepDataFromJson(offsetFromUTCMillis, data),
   );
   return {
     sleeps,
@@ -87,8 +87,8 @@ export interface SleepData {
 }
 
 function SleepDataFromJson(
-  json: unknown,
   offsetFromUTCMillis: number,
+  json: unknown,
 ): SleepData {
   return {
     dateOfSleep: get<string>(json, 'dateOfSleep'),
@@ -101,8 +101,8 @@ function SleepDataFromJson(
     infoCode: get<0 | 1 | 2 | 3>(json, 'infoCode'),
     isMainSleep: get<boolean>(json, 'isMainSleep'),
     levels: SleepLevelsFromJson(
-      get<unknown>(json, 'levels'),
       offsetFromUTCMillis,
+      get<unknown>(json, 'levels'),
     ),
     logId: get<bigint>(json, 'logId'),
     logType: get<'auto_detected' | 'manual'>(json, 'logType'),
@@ -140,8 +140,8 @@ export interface SleepLevels {
 }
 
 function SleepLevelsFromJson(
-  json: unknown,
   offsetFromUTCMillis: number,
+  json: unknown,
 ): SleepLevels {
   const summaryJson = get<unknown>(json, 'summary');
   const summary = exists(summaryJson, 'asleep')
@@ -149,12 +149,12 @@ function SleepLevelsFromJson(
     : SleepLevelSummaryStagesFromJson(summaryJson);
   const shortData = exists(json, 'shortData')
     ? get<unknown[]>(json, 'shortData').map((data) =>
-        SleepLevelDataFromJson(data, offsetFromUTCMillis),
+        SleepLevelDataFromJson(offsetFromUTCMillis, data),
       )
     : undefined;
   return {
     data: get<unknown[]>(json, 'data').map((data) =>
-      SleepLevelDataFromJson(data, offsetFromUTCMillis),
+      SleepLevelDataFromJson(offsetFromUTCMillis, data),
     ),
     shortData,
     summary,
@@ -181,8 +181,8 @@ export interface SleepLevelData {
 }
 
 function SleepLevelDataFromJson(
-  json: unknown,
   offsetFromUTCMillis: number,
+  json: unknown,
 ): SleepLevelData {
   return {
     level: get<SleepLevel>(json, 'level'),

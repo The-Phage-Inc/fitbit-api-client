@@ -249,7 +249,7 @@ describe('Sleep', () => {
       },
     };
 
-    const sleepResponse = SleepResponseFromJson(json, offsetFromUTCMillis);
+    const sleepResponse = SleepResponseFromJson(offsetFromUTCMillis, json);
     expect(sleepResponse.summary.stages).toEqual({
       deep: 54,
       light: 172,
@@ -395,6 +395,6 @@ describe('Sleep', () => {
         totalTimeInBed: 301,
       },
     };
-    SleepResponseFromJson(classicJson, offsetFromUTCMillis);
+    SleepResponseFromJson(offsetFromUTCMillis, classicJson);
   });
 });
