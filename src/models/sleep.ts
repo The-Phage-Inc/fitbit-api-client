@@ -1,5 +1,6 @@
 import { exists, get } from '../utils/types.utils';
-import { SleepLevel, UtcDate } from '../types';
+import { SleepLevel } from '../types';
+import { convertToOffsetDate } from '../utils/date.utils';
 
 /**
  * 睡眠データのレスポンス
@@ -15,9 +16,12 @@ export interface SleepResponse {
   summary: SleepSummary;
 }
 
-export function SleepResponseFromJson(json: unknown): SleepResponse {
+export function SleepResponseFromJson(
+  json: unknown,
+  offsetFromUTCMillis: number,
+): SleepResponse {
   const sleeps = get<unknown[]>(json, 'sleep').map((data) =>
-    SleepDataFromJson(data),
+    SleepDataFromJson(data, offsetFromUTCMillis),
   );
   return {
     sleeps,
@@ -29,7 +33,11 @@ export function SleepResponseFromJson(json: unknown): SleepResponse {
  * 各日付の睡眠データ
  */
 export interface SleepData {
-  dateOfSleep: UtcDate;
+  /**
+   * 睡眠の日付
+   * 'yyyy-MM-dd'
+   */
+  dateOfSleep: string;
   /**
    * 睡眠時間（ミリ秒）
    * @type {number}
@@ -78,22 +86,34 @@ export interface SleepData {
   type: 'stages' | 'classic';
 }
 
-function SleepDataFromJson(json: unknown): SleepData {
+function SleepDataFromJson(
+  json: unknown,
+  offsetFromUTCMillis: number,
+): SleepData {
   return {
-    dateOfSleep: get<UtcDate>(json, 'dateOfSleep'),
+    dateOfSleep: get<string>(json, 'dateOfSleep'),
     duration: get<number>(json, 'duration'),
     efficiency: get<number>(json, 'efficiency'),
-    endTime: new Date(`${get<string>(json, 'endTime')}Z`),
+    endTime: convertToOffsetDate(
+      new Date(`${get<string>(json, 'endTime')}Z`),
+      offsetFromUTCMillis,
+    ),
     infoCode: get<0 | 1 | 2 | 3>(json, 'infoCode'),
     isMainSleep: get<boolean>(json, 'isMainSleep'),
-    levels: SleepLevelsFromJson(get<unknown>(json, 'levels')),
+    levels: SleepLevelsFromJson(
+      get<unknown>(json, 'levels'),
+      offsetFromUTCMillis,
+    ),
     logId: get<bigint>(json, 'logId'),
     logType: get<'auto_detected' | 'manual'>(json, 'logType'),
     minutesAfterWakeup: get<number>(json, 'minutesAfterWakeup'),
     minutesAsleep: get<number>(json, 'minutesAsleep'),
     minutesAwake: get<number>(json, 'minutesAwake'),
     minutesToFallAsleep: get<number>(json, 'minutesToFallAsleep'),
-    startTime: new Date(`${get<string>(json, 'startTime')}Z`),
+    startTime: convertToOffsetDate(
+      new Date(`${get<string>(json, 'startTime')}Z`),
+      offsetFromUTCMillis,
+    ),
     timeInBed: get<number>(json, 'timeInBed'),
     type: get<'stages' | 'classic'>(json, 'type'),
   };
@@ -119,19 +139,22 @@ export interface SleepLevels {
   summary: SleepLevelSummaryStages | SleepLevelSummaryClassic;
 }
 
-function SleepLevelsFromJson(json: unknown): SleepLevels {
+function SleepLevelsFromJson(
+  json: unknown,
+  offsetFromUTCMillis: number,
+): SleepLevels {
   const summaryJson = get<unknown>(json, 'summary');
   const summary = exists(summaryJson, 'asleep')
     ? SleepLevelSummaryClassicFromJson(summaryJson)
     : SleepLevelSummaryStagesFromJson(summaryJson);
   const shortData = exists(json, 'shortData')
     ? get<unknown[]>(json, 'shortData').map((data) =>
-        SleepLevelDataFromJson(data),
+        SleepLevelDataFromJson(data, offsetFromUTCMillis),
       )
     : undefined;
   return {
     data: get<unknown[]>(json, 'data').map((data) =>
-      SleepLevelDataFromJson(data),
+      SleepLevelDataFromJson(data, offsetFromUTCMillis),
     ),
     shortData,
     summary,
@@ -157,10 +180,16 @@ export interface SleepLevelData {
   seconds: number;
 }
 
-function SleepLevelDataFromJson(json: unknown): SleepLevelData {
+function SleepLevelDataFromJson(
+  json: unknown,
+  offsetFromUTCMillis: number,
+): SleepLevelData {
   return {
     level: get<SleepLevel>(json, 'level'),
-    dateTime: new Date(`${get<string>(json, 'dateTime')}Z`),
+    dateTime: convertToOffsetDate(
+      new Date(`${get<string>(json, 'dateTime')}Z`),
+      offsetFromUTCMillis,
+    ),
     seconds: get<number>(json, 'seconds'),
   };
 }
