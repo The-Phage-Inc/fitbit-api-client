@@ -5,6 +5,7 @@ import { OAuthSession } from 'fitbit-api-client';
  */
 export class DatabaseMock {
   session: OAuthSession | undefined;
+  refreshToken: string | undefined;
 
   saveSession(session: OAuthSession) {
     this.session = session;
@@ -12,5 +13,13 @@ export class DatabaseMock {
 
   findSessionByState(_: string) {
     return this.session;
+  }
+
+  saveRefreshToken(refreshToken: string) {
+    this.refreshToken = refreshToken;
+  }
+
+  findRefreshToken() {
+    return this.refreshToken;
   }
 }
