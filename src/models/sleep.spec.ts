@@ -2,6 +2,8 @@ import { SleepResponseFromJson } from './sleep';
 
 describe('Sleep', () => {
   it('問題なく型変換出来ること', () => {
+    // Asia/Tokyoの場合
+    const offsetFromUTCMillis = 32400000;
     const json = {
       sleep: [
         {
@@ -247,7 +249,7 @@ describe('Sleep', () => {
       },
     };
 
-    const sleepResponse = SleepResponseFromJson(json);
+    const sleepResponse = SleepResponseFromJson(offsetFromUTCMillis, json);
     expect(sleepResponse.summary.stages).toEqual({
       deep: 54,
       light: 172,
@@ -256,20 +258,22 @@ describe('Sleep', () => {
     });
     expect(sleepResponse.summary.totalSleepRecords).toEqual(1);
     expect(sleepResponse.sleeps[0].startTime).toEqual(
-      new Date('2024-10-07T05:07:30.000Z'),
+      new Date('2024-10-07T05:07:30.000+09:00'),
     );
     expect(sleepResponse.sleeps[0].endTime).toEqual(
-      new Date('2024-10-07T10:09:00.000Z'),
+      new Date('2024-10-07T10:09:00.000+09:00'),
     );
     expect(sleepResponse.sleeps[0].levels.data[0].dateTime).toEqual(
-      new Date('2024-10-07T05:07:30.000Z'),
+      new Date('2024-10-07T05:07:30.000+09:00'),
     );
     expect(sleepResponse.sleeps[0].levels.data[16].dateTime).toEqual(
-      new Date('2024-10-07T10:04:30.000Z'),
+      new Date('2024-10-07T10:04:30.000+09:00'),
     );
   });
 
   it('typeがClassicの場合', () => {
+    // Asia/Tokyoの場合
+    const offsetFromUTCMillis = 32400000;
     const classicJson = {
       sleep: [
         {
@@ -391,6 +395,6 @@ describe('Sleep', () => {
         totalTimeInBed: 301,
       },
     };
-    SleepResponseFromJson(classicJson);
+    SleepResponseFromJson(offsetFromUTCMillis, classicJson);
   });
 });

@@ -15,6 +15,8 @@ if (CLIENT_ID == null || CLIENT_SECRET == null || REDIRECT_URI == null) {
 }
 
 const app = express();
+
+// セッション保管用のDBモック
 const database = new DatabaseMock();
 
 // 認可URLを取得してブラウザにリダイレクト
@@ -28,6 +30,7 @@ app.get('/auth', (req, res) => {
   database.saveSession(session);
 
   const authorizationUrl = client.oauth.getAuthorizationUrl([
+    'profile',
     'weight',
     'activity',
     'heartrate',
@@ -66,18 +69,49 @@ app.get('/auth/callback', async (req, res) => {
       code as string,
       state as string,
     );
-    const successMessage = `認証完了: ${JSON.stringify(token)}`;
-
-    await client.auth.refreshAccessToken();
-    await client.auth.getAccessToken();
+    // トークンをDBに保存
+    database.saveRefreshToken(token.refreshToken);
 
     // 成功メッセージを返す
-    console.log(successMessage);
-    res.send(successMessage);
+    res.send('認証に成功しました。');
+    console.log('認証に成功しました。');
+    console.log(
+      'こちらにsleepから睡眠記録を閲覧できます。 http://localhost:3000/fitbit/sleep',
+    );
   } catch (error) {
     console.error(error);
     res.status(500).send('認証エラーが発生しました');
   }
+});
+
+// 睡眠記録を取得するサンプル
+app.get('/fitbit/sleep', async (req, res) => {
+  // トークンを取得
+  const refreshToken = database.findRefreshToken();
+  if (!refreshToken) {
+    res.status(400).send('トークンがありません');
+    return;
+  }
+
+  // FitbitClientのインスタンスを作成
+  const client = new FitbitClient({
+    clientId: CLIENT_ID,
+    clientSecret: CLIENT_SECRET,
+    token: { refreshToken },
+  });
+
+  // アクセストークンの更新
+  await client.auth.refreshAccessToken();
+
+  // オフセットを取得
+  const profile = await client.profile.getProfile();
+
+  // 睡眠記録を取得
+  const sleep = await client.sleep.getSleepLog(
+    '2024-10-07',
+    profile.user.offsetFromUTCMillis,
+  );
+  res.status(200).json(sleep);
 });
 
 // サーバー起動

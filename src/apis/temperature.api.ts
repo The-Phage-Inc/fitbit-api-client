@@ -1,8 +1,7 @@
 import { BaseApi, TokenRequestOptions } from './base.api';
-import { UtcDate } from '../types';
 
 interface GetTemperatureByDateRequest {
-  utcDate: UtcDate;
+  localDate: string;
 }
 
 export class TemperatureApi extends BaseApi {
@@ -12,8 +11,8 @@ export class TemperatureApi extends BaseApi {
     request: GetTemperatureByDateRequest,
     options: TokenRequestOptions,
   ): Promise<unknown> {
-    const { utcDate } = request;
-    const path = `/1/user/-/temp/core/date/${utcDate}.json`;
+    const { localDate } = request;
+    const path = `/1/user/-/temp/core/date/${localDate}.json`;
     return this.get(path, options);
   }
 }

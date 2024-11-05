@@ -1,12 +1,15 @@
 import { BaseApi, TokenRequestOptions } from './base.api';
-import { UtcDate } from '../types';
 import {
   SpO2IntradayResponse,
   SpO2IntradayResponseFromJson,
 } from '../models/spo2/spo2';
 
 interface GetSpO2IntradayByDateRequest {
-  utcDate: UtcDate;
+  /**
+   * 端末のタイムゾーンでの日付
+   * 'YYYY-MM-DD'
+   */
+  localDate: string;
 }
 
 export class SpO2Api extends BaseApi {
@@ -20,9 +23,11 @@ export class SpO2Api extends BaseApi {
    */
   async getSpo2IntradayByDate(
     request: GetSpO2IntradayByDateRequest,
+    offsetFromUTCMillis: number,
     options: TokenRequestOptions,
   ): Promise<SpO2IntradayResponse> {
     return SpO2IntradayResponseFromJson(
+      offsetFromUTCMillis,
       await this.getSpO2IntradayByDateRaw(request, options),
     );
   }
@@ -31,8 +36,8 @@ export class SpO2Api extends BaseApi {
     request: GetSpO2IntradayByDateRequest,
     options: TokenRequestOptions,
   ): Promise<unknown> {
-    const { utcDate } = request;
-    const path = `/1/user/-/spo2/date/${utcDate}/all.json`;
+    const { localDate } = request;
+    const path = `/1/user/-/spo2/date/${localDate}/all.json`;
     return this.get(path, options);
   }
 }

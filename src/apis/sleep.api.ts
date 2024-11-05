@@ -1,9 +1,12 @@
 import { BaseApi, TokenRequestOptions } from './base.api';
-import { UtcDate } from '../types';
 import { SleepResponse, SleepResponseFromJson } from '../models';
 
 interface GetSleepByDateRequest {
-  utcDate: UtcDate;
+  /**
+   * 端末のタイムゾーンでの日付
+   * 'YYYY-MM-DD'
+   */
+  localDate: string;
 }
 
 export class SleepApi extends BaseApi {
@@ -15,9 +18,11 @@ export class SleepApi extends BaseApi {
    */
   async getSleepLogByDate(
     request: GetSleepByDateRequest,
+    offsetFromUTCMillis: number,
     options: TokenRequestOptions,
   ): Promise<SleepResponse> {
     return SleepResponseFromJson(
+      offsetFromUTCMillis,
       await this.getSleepLogByDateRaw(request, options),
     );
   }
@@ -26,8 +31,8 @@ export class SleepApi extends BaseApi {
     request: GetSleepByDateRequest,
     options: TokenRequestOptions,
   ): Promise<unknown> {
-    const { utcDate } = request;
-    const path = `/1.2/user/-/sleep/date/${utcDate}.json`;
+    const { localDate } = request;
+    const path = `/1.2/user/-/sleep/date/${localDate}.json`;
     return this.get(path, options);
   }
 }
