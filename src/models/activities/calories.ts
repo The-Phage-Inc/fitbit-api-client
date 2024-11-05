@@ -55,7 +55,7 @@ export interface CaloriesDailyData {
 
 function CaloriesDailyDataFromJson(json: unknown): CaloriesDailyData {
   return {
-    calories: get<number>(json, 'value'),
+    calories: Number(get<number>(json, 'value')),
     localDate: get<string>(json, 'dateTime'),
   };
 }

@@ -52,7 +52,7 @@ export interface StepsDailyData {
 
 function StepsDailyDataFromJson(json: unknown): StepsDailyData {
   return {
-    steps: get<number>(json, 'value'),
+    steps: Number(get<number>(json, 'value')),
     localDate: get<string>(json, 'dateTime'),
   };
 }
