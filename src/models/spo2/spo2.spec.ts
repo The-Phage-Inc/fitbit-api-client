@@ -27,17 +27,17 @@ describe('SpO2', () => {
     ) as SpO2IntradayResponse;
     expect(spO2).not.toBeNull();
     expect(spO2.localDate).toEqual('2024-01-01');
-    expect(spO2.dataset?.length).toEqual(3);
-    expect(spO2.dataset?.[0].value).toEqual(95.7);
-    expect(spO2.dataset?.[0].dateTime).toEqual(
+    expect(spO2.dataset.length).toEqual(3);
+    expect(spO2.dataset[0].value).toEqual(95.7);
+    expect(spO2.dataset[0].dateTime).toEqual(
       new Date('2024-01-01T04:02:17+09:00'),
     );
-    expect(spO2.dataset?.[1].value).toEqual(99.5);
-    expect(spO2.dataset?.[1].dateTime).toEqual(
+    expect(spO2.dataset[1].value).toEqual(99.5);
+    expect(spO2.dataset[1].dateTime).toEqual(
       new Date('2024-01-01T04:03:17+09:00'),
     );
-    expect(spO2.dataset?.[2].value).toEqual(99.0);
-    expect(spO2.dataset?.[2].dateTime).toEqual(
+    expect(spO2.dataset[2].value).toEqual(99.0);
+    expect(spO2.dataset[2].dateTime).toEqual(
       new Date('2024-01-01T04:04:17+09:00'),
     );
   });

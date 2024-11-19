@@ -5,8 +5,8 @@ import { convertToOffsetDate } from '../../utils/date.utils';
  * 酸素飽和度のレスポンス
  */
 export interface SpO2IntradayResponse {
-  localDate?: string;
-  dataset?: SpO2IntradayData[];
+  localDate: string;
+  dataset: SpO2IntradayData[];
 }
 
 export function SpO2IntradayResponseFromJson(
