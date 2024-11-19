@@ -180,7 +180,7 @@ export class FitbitClient {
     getSpO2Intraday: (
       localDate: string,
       offsetFromUTCMillis: number,
-    ) => Promise<SpO2IntradayResponse>;
+    ) => Promise<SpO2IntradayResponse | null>;
     getSpO2IntradayRaw: (localDate: string) => Promise<unknown>;
   };
 
@@ -508,7 +508,7 @@ export class FitbitClient {
   private async getSpO2Intraday(
     localDate: string,
     offsetFromUTCMillis: number,
-  ): Promise<SpO2IntradayResponse> {
+  ): Promise<SpO2IntradayResponse | null> {
     const accessToken = await this.auth.getAccessToken();
     return await spO2Api.getSpo2IntradayByDate(
       {

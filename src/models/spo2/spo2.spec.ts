@@ -1,4 +1,4 @@
-import { SpO2IntradayResponseFromJson } from './spo2';
+import { SpO2IntradayResponse, SpO2IntradayResponseFromJson } from './spo2';
 
 describe('SpO2', () => {
   it('問題なく型変換出来ること', () => {
@@ -21,7 +21,11 @@ describe('SpO2', () => {
         },
       ],
     };
-    const spO2 = SpO2IntradayResponseFromJson(offsetFromUTCMillis, json);
+    const spO2 = SpO2IntradayResponseFromJson(
+      offsetFromUTCMillis,
+      json,
+    ) as SpO2IntradayResponse;
+    expect(spO2).not.toBeNull();
     expect(spO2.localDate).toEqual('2024-01-01');
     expect(spO2.dataset?.length).toEqual(3);
     expect(spO2.dataset?.[0].value).toEqual(95.7);
@@ -43,7 +47,6 @@ describe('SpO2', () => {
     const offsetFromUTCMillis = 32400000;
     const json = {};
     const spO2 = SpO2IntradayResponseFromJson(offsetFromUTCMillis, json);
-    expect(spO2.localDate).toBeUndefined();
-    expect(spO2.dataset).toBeUndefined();
+    expect(spO2).toBeNull();
   });
 });

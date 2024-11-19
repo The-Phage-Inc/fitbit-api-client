@@ -12,15 +12,15 @@ export interface SpO2IntradayResponse {
 export function SpO2IntradayResponseFromJson(
   offsetFromUTCMillis: number,
   json: unknown,
-): SpO2IntradayResponse {
-  const localDate = exists(json, 'dateTime')
-    ? get<string>(json, 'dateTime')
-    : undefined;
-  const dataset = exists(json, 'minutes')
-    ? get<unknown[]>(json, 'minutes').map((data) =>
-        SpO2IntradayDataFromJson(offsetFromUTCMillis, data),
-      )
-    : undefined;
+): SpO2IntradayResponse | null {
+  if (!exists(json, 'dateTime') || !exists(json, 'minutes')) {
+    return null;
+  }
+
+  const localDate = get<string>(json, 'dateTime');
+  const dataset = get<unknown[]>(json, 'minutes').map((data) =>
+    SpO2IntradayDataFromJson(offsetFromUTCMillis, data),
+  );
   return {
     localDate,
     dataset,
