@@ -1,22 +1,26 @@
-import { get } from '../../utils/types.utils';
+import { exists, get } from '../../utils/types.utils';
 import { convertToOffsetDate } from '../../utils/date.utils';
 
 /**
  * 酸素飽和度のレスポンス
  */
 export interface SpO2IntradayResponse {
-  localDate: string;
-  dataset: SpO2IntradayData[];
+  localDate?: string;
+  dataset?: SpO2IntradayData[];
 }
 
 export function SpO2IntradayResponseFromJson(
   offsetFromUTCMillis: number,
   json: unknown,
 ): SpO2IntradayResponse {
-  const localDate = get<string>(json, 'dateTime');
-  const dataset = get<unknown[]>(json, 'minutes').map((data) =>
-    SpO2IntradayDataFromJson(offsetFromUTCMillis, data),
-  );
+  const localDate = exists(json, 'dateTime')
+    ? get<string>(json, 'dateTime')
+    : undefined;
+  const dataset = exists(json, 'minutes')
+    ? get<unknown[]>(json, 'minutes').map((data) =>
+        SpO2IntradayDataFromJson(offsetFromUTCMillis, data),
+      )
+    : undefined;
   return {
     localDate,
     dataset,
