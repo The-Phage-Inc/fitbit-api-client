@@ -1,4 +1,4 @@
-import { get } from '../../utils/types.utils';
+import { exists, get } from '../../utils/types.utils';
 import { convertToOffsetDate } from '../../utils/date.utils';
 
 /**
@@ -12,7 +12,11 @@ export interface SpO2IntradayResponse {
 export function SpO2IntradayResponseFromJson(
   offsetFromUTCMillis: number,
   json: unknown,
-): SpO2IntradayResponse {
+): SpO2IntradayResponse | null {
+  if (!exists(json, 'dateTime') || !exists(json, 'minutes')) {
+    return null;
+  }
+
   const localDate = get<string>(json, 'dateTime');
   const dataset = get<unknown[]>(json, 'minutes').map((data) =>
     SpO2IntradayDataFromJson(offsetFromUTCMillis, data),
