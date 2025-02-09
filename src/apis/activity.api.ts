@@ -114,7 +114,7 @@ export class ActivityApi extends BaseApi {
 
   /**
    * ActivityAPI
-   * https://dev.fitbit.com/build/reference/web-api/intraday/get-heartrate-intraday-by-date/
+   * https://dev.fitbit.com/build/reference/web-api/activity/
    * @param request
    * @param options
    */

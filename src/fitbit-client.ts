@@ -14,6 +14,7 @@ import {
   temperatureApi,
   spO2Api,
   profileAPi,
+  bodyApi,
 } from './apis';
 import { CODE_CHALLENGE_METHOD, FITBIT_AUTH_URL } from './constants';
 import {
@@ -25,6 +26,7 @@ import { DetailLevel, FitbitScope, MinuteDetailLevel } from './types';
 import { CaloriesResponse } from './models';
 import { SpO2IntradayResponse } from './models/spo2/spo2';
 import { ProfileResponse } from './models/profile';
+import { WeightResponse } from './models/body';
 
 type Props = {
   clientId: string;
@@ -87,6 +89,10 @@ export class FitbitClient {
     this.spO2 = {
       getSpO2Intraday: this.getSpO2Intraday.bind(this),
       getSpO2IntradayRaw: this.getSpO2IntradayRaw.bind(this),
+    };
+    this.body = {
+      getWeightLog: this.getWeightLog.bind(this),
+      getWeightLogRaw: this.getWeightLogRaw.bind(this),
     };
   }
 
@@ -182,6 +188,14 @@ export class FitbitClient {
       offsetFromUTCMillis: number,
     ) => Promise<SpO2IntradayResponse | null>;
     getSpO2IntradayRaw: (localDate: string) => Promise<unknown>;
+  };
+
+  public body: {
+    getWeightLog: (
+      localDate: string,
+      offsetFromUTCMillis: number,
+    ) => Promise<WeightResponse>;
+    getWeightLogRaw: (localDate: string) => Promise<unknown>;
   };
 
   /**
@@ -522,6 +536,30 @@ export class FitbitClient {
   private async getSpO2IntradayRaw(localDate: string): Promise<unknown> {
     const accessToken = await this.auth.getAccessToken();
     return await spO2Api.getSpO2IntradayByDateRaw(
+      {
+        localDate,
+      },
+      { accessToken },
+    );
+  }
+
+  private async getWeightLog(
+    localDate: string,
+    offsetFromUTCMillis: number,
+  ): Promise<WeightResponse> {
+    const accessToken = await this.auth.getAccessToken();
+    return await bodyApi.getWeightLogByDate(
+      {
+        localDate,
+      },
+      offsetFromUTCMillis,
+      { accessToken },
+    );
+  }
+
+  private async getWeightLogRaw(localDate: string): Promise<unknown> {
+    const accessToken = await this.auth.getAccessToken();
+    return await bodyApi.getWeightLogByDateRaw(
       {
         localDate,
       },
