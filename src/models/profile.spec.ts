@@ -264,13 +264,14 @@ describe('Profile', () => {
       },
     };
     const profile = ProfileResponseFromJson(someUndefinedJson);
+    console.log(profile);
     expect(profile.user.age).toBe(20);
     expect(profile.user.dateOfBirth).toBe('2004-01-01');
     expect(profile.user.displayName).toBe('First Last');
     expect(profile.user.encodedId).toBe('DUMMY');
     expect(profile.user.fullName).toBe('First Last');
-    expect(profile.user.firstName).toBe('');
-    expect(profile.user.lastName).toBe('');
+    expect(profile.user.firstName).toBe(undefined);
+    expect(profile.user.lastName).toBe(undefined);
     expect(profile.user.gender).toBe('MALE');
     expect(profile.user.height).toBe(180);
     expect(profile.user.offsetFromUTCMillis).toBe(32400000);

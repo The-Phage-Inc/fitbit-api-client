@@ -22,7 +22,7 @@ export function exists(json: any, key: string) {
 export function get<T>(obj: any, key: string): T {
   // undefinedでも許可するキーを判定する
   if (permissionKey(key)) {
-    return '' as T;
+    return obj[key] as T;
   }
 
   if (!exists(obj, key)) {
