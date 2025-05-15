@@ -32,8 +32,9 @@ export function get<T>(obj: any, key: string): T {
 }
 
 /**
- * undefinedでも許可するキーを判定
+ * 許可されているキーを判定する
  * @param key
+ * @returns boolean
  */
 function permissionKey(key: string) {
   return key === 'firstName' || key === 'lastName';

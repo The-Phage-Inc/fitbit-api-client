@@ -138,7 +138,8 @@ describe('Profile', () => {
     expect(profile.user.height).toBe(180);
     expect(profile.user.offsetFromUTCMillis).toBe(32400000);
   });
-  it('undefinedが送られた来た場合、空で返却されること', () => {
+
+  it('undefinedが送られてきた場合、空で返却されること', () => {
     const someUndefinedJson = {
       user: {
         age: 20,
@@ -264,7 +265,6 @@ describe('Profile', () => {
       },
     };
     const profile = ProfileResponseFromJson(someUndefinedJson);
-    console.log(profile);
     expect(profile.user.age).toBe(20);
     expect(profile.user.dateOfBirth).toBe('2004-01-01');
     expect(profile.user.displayName).toBe('First Last');
