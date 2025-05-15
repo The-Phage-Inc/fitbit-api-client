@@ -36,7 +36,5 @@ export function get<T>(obj: any, key: string): T {
  * @param key
  */
 function permissionKey(key: string) {
-  if (key === 'firstName' || key === 'lastName') {
-    return true;
-  }
+  return key === 'firstName' || key === 'lastName';
 }
