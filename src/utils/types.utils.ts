@@ -28,7 +28,7 @@ export function exists(json: any, key: string) {
 }
 
 /**
- * 指定されたキーが存在する場合はジェネリクスで型安全に値を取得し、存在しない場合は例外をスロー
+ * 指定されたキーが存在する場合はジェネリクスで値を取得し、存在しない場合は例外をスロー
  * @param obj
  * @param key
  */
@@ -44,11 +44,11 @@ export function get<T>(obj: any, key: string): T {
  * 指定されたキーが存在する場合はその値を取得し、存在しない場合はundefinedを返す
  * @param json
  * @param key
- * @returns string | undefined
+ * @returns T | undefined
  */
-export function getOptionalString(
+export function getOptionalString<T>(
   json: unknown,
   key: string,
-): string | undefined {
-  return exists(json, key) ? get<string>(json, key) : undefined;
+): T | undefined {
+  return exists(json, key) ? get<T>(json, key) : undefined;
 }

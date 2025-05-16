@@ -55,18 +55,14 @@ export interface UserData {
  * @constructor
  */
 function UserDataFromJson(json: unknown): UserData {
-  // キーの存在を確認
-  const firstName = getOptionalString(json, 'firstName');
-  const lastName = getOptionalString(json, 'lastName');
-
   return {
     age: get<number>(json, 'age'),
     dateOfBirth: get<string>(json, 'dateOfBirth'),
     displayName: get<string>(json, 'displayName'),
     encodedId: get<string>(json, 'encodedId'),
     fullName: get<string>(json, 'fullName'),
-    firstName: firstName,
-    lastName: lastName,
+    firstName: getOptionalString<string>(json, 'firstName'),
+    lastName: getOptionalString<string>(json, 'lastName'),
     gender: get<Gender>(json, 'gender'),
     height: get<number>(json, 'height'),
     offsetFromUTCMillis: get<number>(json, 'offsetFromUTCMillis'),
