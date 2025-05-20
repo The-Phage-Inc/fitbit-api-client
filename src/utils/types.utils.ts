@@ -46,9 +46,6 @@ export function get<T>(obj: any, key: string): T {
  * @param key
  * @returns T | undefined
  */
-export function getOptionalString<T>(
-  json: unknown,
-  key: string,
-): T | undefined {
+export function getOptionalValue<T>(json: unknown, key: string): T | undefined {
   return exists(json, key) ? get<T>(json, key) : undefined;
 }
