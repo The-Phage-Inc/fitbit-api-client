@@ -32,6 +32,7 @@ export function exists(json: any, key: string) {
  * オブジェクトとキーが存在する場合はジェネリクスで値を取得し、存在しない場合は例外をスロー
  * @param obj
  * @param key
+ * @returns T
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function get<T>(obj: any, key: string): T {
