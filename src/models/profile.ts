@@ -1,4 +1,4 @@
-import { get } from '../utils/types.utils';
+import { get, getOptionalValue } from '../utils/types.utils';
 import { Gender } from '../types';
 
 /**
@@ -8,6 +8,11 @@ export interface ProfileResponse {
   user: UserData;
 }
 
+/**
+ * プロフィール情報レスポンスをJSONから取得する
+ * @param json
+ * @return ProfileResponse
+ */
 export function ProfileResponseFromJson(json: unknown): ProfileResponse {
   return {
     user: UserDataFromJson(get<unknown>(json, 'user')),
@@ -33,9 +38,9 @@ export interface UserData {
   // フルネーム
   fullName: string;
   // 名
-  firstName: string;
+  firstName?: string;
   // 姓
-  lastName: string;
+  lastName?: string;
   // 性別
   gender: Gender;
   // 身長
@@ -44,6 +49,11 @@ export interface UserData {
   offsetFromUTCMillis: number;
 }
 
+/**
+ * ユーザーデータをJSONから取得する
+ * @param json
+ * @return UserData
+ */
 function UserDataFromJson(json: unknown): UserData {
   return {
     age: get<number>(json, 'age'),
@@ -51,8 +61,8 @@ function UserDataFromJson(json: unknown): UserData {
     displayName: get<string>(json, 'displayName'),
     encodedId: get<string>(json, 'encodedId'),
     fullName: get<string>(json, 'fullName'),
-    firstName: get<string>(json, 'firstName'),
-    lastName: get<string>(json, 'lastName'),
+    firstName: getOptionalValue<string>(json, 'firstName'),
+    lastName: getOptionalValue<string>(json, 'lastName'),
     gender: get<Gender>(json, 'gender'),
     height: get<number>(json, 'height'),
     offsetFromUTCMillis: get<number>(json, 'offsetFromUTCMillis'),
