@@ -16,7 +16,7 @@ export function parseFitbitScope(value: unknown): FitbitScope {
 }
 
 /**
- * キーが存在するかどうかを確認する
+ * jsonオブジェクトとキーが存在するかどうかを確認する
  * @param json
  * @param key
  * @returns boolean
@@ -41,7 +41,7 @@ export function get<T>(obj: any, key: string): T {
 }
 
 /**
- * キーが存在する場合はジェネリクスで値を取得し、存在しない場合はundefinedを返す
+ * jsonオブジェクトとキーが存在する場合はジェネリクスで値を取得し、存在しない場合はundefinedを返す
  * @param json
  * @param key
  * @returns T | undefined
