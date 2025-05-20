@@ -11,7 +11,7 @@ export interface ProfileResponse {
 /**
  * プロフィール情報レスポンスをJSONから取得する
  * @param json
- * @constructor
+ * @return ProfileResponse
  */
 export function ProfileResponseFromJson(json: unknown): ProfileResponse {
   return {
@@ -52,7 +52,7 @@ export interface UserData {
 /**
  * ユーザーデータをJSONから取得する
  * @param json
- * @constructor
+ * @return UserData
  */
 function UserDataFromJson(json: unknown): UserData {
   return {
@@ -61,8 +61,8 @@ function UserDataFromJson(json: unknown): UserData {
     displayName: get<string>(json, 'displayName'),
     encodedId: get<string>(json, 'encodedId'),
     fullName: get<string>(json, 'fullName'),
-    firstName: getOptionalValue<string | undefined>(json, 'firstName'),
-    lastName: getOptionalValue<string | undefined>(json, 'lastName'),
+    firstName: getOptionalValue<string>(json, 'firstName'),
+    lastName: getOptionalValue<string>(json, 'lastName'),
     gender: get<Gender>(json, 'gender'),
     height: get<number>(json, 'height'),
     offsetFromUTCMillis: get<number>(json, 'offsetFromUTCMillis'),

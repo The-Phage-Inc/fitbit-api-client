@@ -4,6 +4,7 @@ import { FitbitScope } from '../types';
 /**
  * 値をFitbitScopeに変換する
  * @param value
+ * @returns FitbitScope
  */
 export function parseFitbitScope(value: unknown): FitbitScope {
   if (

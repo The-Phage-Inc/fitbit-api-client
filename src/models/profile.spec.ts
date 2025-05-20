@@ -139,7 +139,7 @@ describe('Profile', () => {
     expect(profile.user.offsetFromUTCMillis).toBe(32400000);
   });
 
-  it('一部パロパティが欠けている状態でも、型変換されて返却されること', () => {
+  it('一部プロパティが欠けている状態でも、型変換されて返却されること', () => {
     const someUndefinedJson = {
       user: {
         age: 20,
