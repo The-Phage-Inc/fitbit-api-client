@@ -1,4 +1,4 @@
-import { exists, get } from '../utils/types.utils';
+import { exists, get, getOptionalValue } from '../utils/types.utils';
 import { SleepLevel } from '../types';
 import { convertToOffsetDate } from '../utils/date.utils';
 
@@ -73,10 +73,10 @@ export interface SleepData {
    */
   logId: bigint;
   logType: 'auto_detected' | 'manual';
-  minutesAfterWakeup: number;
-  minutesAsleep: number;
-  minutesAwake: number;
-  minutesToFallAsleep: number;
+  minutesAfterWakeup?: number;
+  minutesAsleep?: number;
+  minutesAwake?: number;
+  minutesToFallAsleep?: number;
   /**
    * 睡眠の開始時間
    * @type {Date}
@@ -106,10 +106,10 @@ function SleepDataFromJson(
     ),
     logId: get<bigint>(json, 'logId'),
     logType: get<'auto_detected' | 'manual'>(json, 'logType'),
-    minutesAfterWakeup: get<number>(json, 'minutesAfterWakeup'),
-    minutesAsleep: get<number>(json, 'minutesAsleep'),
-    minutesAwake: get<number>(json, 'minutesAwake'),
-    minutesToFallAsleep: get<number>(json, 'minutesToFallAsleep'),
+    minutesAfterWakeup: getOptionalValue<number>(json, 'minutesAfterWakeup'),
+    minutesAsleep: getOptionalValue<number>(json, 'minutesAsleep'),
+    minutesAwake: getOptionalValue<number>(json, 'minutesAwake'),
+    minutesToFallAsleep: getOptionalValue<number>(json, 'minutesToFallAsleep'),
     startTime: convertToOffsetDate(
       new Date(`${get<string>(json, 'startTime')}Z`),
       offsetFromUTCMillis,
