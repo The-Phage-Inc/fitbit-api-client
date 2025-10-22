@@ -3,8 +3,10 @@ import { DetailLevel } from '../types';
 import {
   HeartRateResponse,
   HeartRateResponseFromJson,
-  HRVResponse,
-  HRVResponseFromJson,
+  HRVIntradayResponse,
+  HRVIntradayResponseFromJson,
+  HRVSummaryResponse,
+  HRVSummaryResponseFromJson,
 } from '../models';
 import { validateDateString } from '../utils/date.utils';
 
@@ -69,8 +71,8 @@ export class HeartRateApi extends BaseApi {
   async getHRVSummaryByDate(
     request: GetHRVSummaryByDateRequest,
     options: TokenRequestOptions,
-  ): Promise<HRVResponse> {
-    return HRVResponseFromJson(
+  ): Promise<HRVSummaryResponse> {
+    return HRVSummaryResponseFromJson(
       await this.getHRVSummaryByDateRaw(request, options),
     );
   }
@@ -88,8 +90,8 @@ export class HeartRateApi extends BaseApi {
   async getHRVIntradayByDate(
     request: GetHRVIntradayRequest,
     options: TokenRequestOptions,
-  ): Promise<HRVResponse> {
-    return HRVResponseFromJson(
+  ): Promise<HRVIntradayResponse> {
+    return HRVIntradayResponseFromJson(
       await this.getHRVIntradayByDateRaw(request, options),
     );
   }

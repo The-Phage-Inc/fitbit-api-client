@@ -1,6 +1,8 @@
 import {
   AuthToken,
   HeartRateResponse,
+  HRVIntradayResponse,
+  HRVSummaryResponse,
   OAuthSession,
   PartialAuthToken,
   SleepResponse,
@@ -67,6 +69,10 @@ export class FitbitClient {
     this.heartRate = {
       getHeartRateIntraday: this.getHeartRateIntraday.bind(this),
       getHeartRateIntradayRaw: this.getHeartRateIntradayRaw.bind(this),
+      getHRVSummary: this.getHRVSummary.bind(this),
+      getHRVSummaryRaw: this.getHRVSummaryRaw.bind(this),
+      getHRVIntraday: this.getHRVIntraday.bind(this),
+      getHRVIntradayRaw: this.getHRVIntradayRaw.bind(this),
     };
     this.activity = {
       getStepsIntraday: this.getStepsIntraday.bind(this),
@@ -131,6 +137,10 @@ export class FitbitClient {
       localDate: string,
       detailLevel: DetailLevel,
     ) => Promise<unknown>;
+    getHRVSummary: (localDate: string) => Promise<HRVSummaryResponse>;
+    getHRVSummaryRaw: (localDate: string) => Promise<unknown>;
+    getHRVIntraday: (localDate: string) => Promise<HRVIntradayResponse>;
+    getHRVIntradayRaw: (localDate: string) => Promise<unknown>;
   };
 
   public activity: {
@@ -362,6 +372,48 @@ export class FitbitClient {
       {
         localDate,
         detailLevel,
+      },
+      { accessToken },
+    );
+  }
+
+  private async getHRVSummary(localDate: string): Promise<HRVSummaryResponse> {
+    const accessToken = await this.auth.getAccessToken();
+    return await heartRateApi.getHRVSummaryByDate(
+      {
+        localDate,
+      },
+      { accessToken },
+    );
+  }
+
+  private async getHRVSummaryRaw(localDate: string): Promise<unknown> {
+    const accessToken = await this.auth.getAccessToken();
+    return await heartRateApi.getHRVSummaryByDateRaw(
+      {
+        localDate,
+      },
+      { accessToken },
+    );
+  }
+
+  private async getHRVIntraday(
+    localDate: string,
+  ): Promise<HRVIntradayResponse> {
+    const accessToken = await this.auth.getAccessToken();
+    return await heartRateApi.getHRVIntradayByDate(
+      {
+        localDate,
+      },
+      { accessToken },
+    );
+  }
+
+  private async getHRVIntradayRaw(localDate: string): Promise<unknown> {
+    const accessToken = await this.auth.getAccessToken();
+    return await heartRateApi.getHRVIntradayByDateRaw(
+      {
+        localDate,
       },
       { accessToken },
     );
