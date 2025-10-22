@@ -1,6 +1,11 @@
 import { BaseApi, TokenRequestOptions } from './base.api';
 import { DetailLevel } from '../types';
-import { HeartRateResponse, HeartRateResponseFromJson } from '../models';
+import {
+  HeartRateResponse,
+  HeartRateResponseFromJson,
+  HRVResponse,
+  HRVResponseFromJson,
+} from '../models';
 import { validateDateString } from '../utils/date.utils';
 
 interface GetHeartRateIntradayByDateRequest {
@@ -10,6 +15,22 @@ interface GetHeartRateIntradayByDateRequest {
    */
   localDate: string;
   detailLevel: DetailLevel;
+}
+
+interface GetHRVSummaryByDateRequest {
+  /**
+   * 端末のタイムゾーンでの日付
+   * 'YYYY-MM-DD'
+   */
+  localDate: string;
+}
+
+interface GetHRVIntradayRequest {
+  /**
+   * 端末のタイムゾーンでの日付
+   * 'YYYY-MM-DD'
+   */
+  localDate: string;
 }
 
 export class HeartRateApi extends BaseApi {
@@ -42,6 +63,44 @@ export class HeartRateApi extends BaseApi {
     const { localDate, detailLevel } = request;
     validateDateString(localDate);
     const path = `/1/user/-/activities/heart/date/${localDate}/1d/${detailLevel}.json`;
+    return this.get(path, options);
+  }
+
+  async getHRVSummaryByDate(
+    request: GetHRVSummaryByDateRequest,
+    options: TokenRequestOptions,
+  ): Promise<HRVResponse> {
+    return HRVResponseFromJson(
+      await this.getHRVSummaryByDateRaw(request, options),
+    );
+  }
+
+  async getHRVSummaryByDateRaw(
+    request: GetHRVSummaryByDateRequest,
+    options: TokenRequestOptions,
+  ): Promise<unknown> {
+    const { localDate } = request;
+    validateDateString(localDate);
+    const path = `/1/user/-/hrv/date/${localDate}.json`;
+    return this.get(path, options);
+  }
+
+  async getHRVIntradayByDate(
+    request: GetHRVIntradayRequest,
+    options: TokenRequestOptions,
+  ): Promise<HRVResponse> {
+    return HRVResponseFromJson(
+      await this.getHRVIntradayByDateRaw(request, options),
+    );
+  }
+
+  async getHRVIntradayByDateRaw(
+    request: GetHRVIntradayRequest,
+    options: TokenRequestOptions,
+  ): Promise<unknown> {
+    const { localDate } = request;
+    validateDateString(localDate);
+    const path = `/1/user/-/hrv/${localDate}/all.json`;
     return this.get(path, options);
   }
 }
