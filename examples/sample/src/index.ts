@@ -78,6 +78,12 @@ app.get('/auth/callback', async (req, res) => {
     console.log(
       'こちらにsleepから睡眠記録を閲覧できます。 http://localhost:3000/fitbit/sleep',
     );
+    console.log(
+      'HRVSummaryはこちらから閲覧できます。 http://localhost:3000/fitbit/heartrate/summary',
+    );
+    console.log(
+      'HRVIntradayはこちらから閲覧できます。 http://localhost:3000/fitbit/heartrate/intraday',
+    );
   } catch (error) {
     console.error(error);
     res.status(500).send('認証エラーが発生しました');
@@ -112,6 +118,53 @@ app.get('/fitbit/sleep', async (req, res) => {
     profile.user.offsetFromUTCMillis,
   );
   res.status(200).json(sleep);
+});
+
+app.get('/fitbit/heartrate/summary', async (req, res) => {
+  // トークンを取得
+  const refreshToken = database.findRefreshToken();
+  if (!refreshToken) {
+    res.status(400).send('トークンがありません');
+    return;
+  }
+
+  // FitbitClientのインスタンスを作成
+  const client = new FitbitClient({
+    clientId: CLIENT_ID,
+    clientSecret: CLIENT_SECRET,
+    token: { refreshToken },
+  });
+
+  // アクセストークンの更新
+  await client.auth.refreshAccessToken();
+
+  const hRVSummary = await client.heartRate.getHRVSummary('2024-10-07');
+
+  console.log('summary', hRVSummary);
+  res.status(200).json(hRVSummary);
+});
+
+app.get('/fitbit/heartrate/intraday', async (req, res) => {
+  // トークンを取得
+  const refreshToken = database.findRefreshToken();
+  if (!refreshToken) {
+    res.status(400).send('トークンがありません');
+    return;
+  }
+
+  // FitbitClientのインスタンスを作成
+  const client = new FitbitClient({
+    clientId: CLIENT_ID,
+    clientSecret: CLIENT_SECRET,
+    token: { refreshToken },
+  });
+
+  // アクセストークンの更新
+  await client.auth.refreshAccessToken();
+
+  const hRVIntraday = await client.heartRate.getHRVIntraday('2024-10-07');
+  console.log('intraday', hRVIntraday);
+  res.status(200).json(hRVIntraday);
 });
 
 // サーバー起動

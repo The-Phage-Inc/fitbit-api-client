@@ -102,7 +102,7 @@ export class HeartRateApi extends BaseApi {
   ): Promise<unknown> {
     const { localDate } = request;
     validateDateString(localDate);
-    const path = `/1/user/-/hrv/${localDate}/all.json`;
+    const path = `/1/user/-/hrv/date/${localDate}/all.json`;
     return this.get(path, options);
   }
 }
