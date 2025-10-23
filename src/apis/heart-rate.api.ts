@@ -68,6 +68,11 @@ export class HeartRateApi extends BaseApi {
     return this.get(path, options);
   }
 
+  /**
+   * https://dev.fitbit.com/build/reference/web-api/heartrate-variability/get-hrv-summary-by-date/
+   * @param request
+   * @param options
+   */
   async getHRVSummaryByDate(
     request: GetHRVSummaryByDateRequest,
     options: TokenRequestOptions,
@@ -87,6 +92,11 @@ export class HeartRateApi extends BaseApi {
     return this.get(path, options);
   }
 
+  /**
+   * https://dev.fitbit.com/build/reference/web-api/intraday/get-hrv-intraday-by-date/
+   * @param request
+   * @param options
+   */
   async getHRVIntradayByDate(
     request: GetHRVIntradayRequest,
     options: TokenRequestOptions,
