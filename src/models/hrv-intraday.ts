@@ -14,8 +14,8 @@ export interface HRVIntradayResponse {
 export function HRVIntradayResponseFromJson(
   json: unknown,
 ): HRVIntradayResponse {
-  const hRVIntraday = exists(json, 'hrv-intraday')
-    ? HRVIntradayFromJson(get<unknown>(json, 'hrv-intraday'))
+  const hRVIntraday = exists(json, 'hrv')
+    ? HRVIntradayFromJson(get<unknown>(json, 'hrv'))
     : undefined;
 
   return {

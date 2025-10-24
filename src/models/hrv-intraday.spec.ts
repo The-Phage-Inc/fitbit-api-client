@@ -3,16 +3,7 @@ import { HRVIntradayResponseFromJson } from './hrv-intraday';
 describe('HRVIntraday', () => {
   it('問題なく型変換出来ること', () => {
     const json = {
-      hrv: [
-        {
-          dateTime: '2024-10-07',
-          value: {
-            dailyRmssd: 45.5,
-            deepRmssd: 52.3,
-          },
-        },
-      ],
-      'hrv-intraday': {
+      hrv: {
         minutes: [
           {
             minute: '2024-10-07T05:07:30.000',
@@ -72,16 +63,7 @@ describe('HRVIntraday', () => {
 
   it('複数のminutesがある場合でも問題なく型変換出来ること', () => {
     const json = {
-      hrv: [
-        {
-          dateTime: '2024-10-07',
-          value: {
-            dailyRmssd: 45.5,
-            deepRmssd: 52.3,
-          },
-        },
-      ],
-      'hrv-intraday': {
+      hrv: {
         minutes: [
           {
             minute: '2024-10-07T05:07:30.000',
