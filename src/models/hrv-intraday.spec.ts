@@ -6,60 +6,31 @@ describe('HRVIntraday', () => {
       hrv: [
         {
           dateTime: '2024-10-07',
-          minutes: [
-            {
-              minute: new Date('2024-10-07T05:07:30.000+09:00'),
-              value: [
-                {
-                  rmssd: 45.5,
-                  coverage: 0.95,
-                  hf: 0.25,
-                  lf: 0.15,
-                },
-              ],
-            },
-            {
-              minute: new Date('2024-10-07T05:12:30.000+09:00'),
-              value: [
-                {
-                  rmssd: 48.2,
-                  coverage: 0.92,
-                  hf: 0.28,
-                  lf: 0.18,
-                },
-              ],
-            },
-          ],
+          value: {
+            dailyRmssd: 45.5,
+            deepRmssd: 52.3,
+          },
         },
       ],
       'hrv-intraday': {
-        hrv: [
+        minutes: [
           {
-            dateTime: '2024-10-07',
-            minutes: [
-              {
-                minute: new Date('2024-10-07T05:07:30.000+09:00'),
-                value: [
-                  {
-                    rmssd: 45.5,
-                    coverage: 0.95,
-                    hf: 0.25,
-                    lf: 0.15,
-                  },
-                ],
-              },
-              {
-                minute: new Date('2024-10-07T05:12:30.000+09:00'),
-                value: [
-                  {
-                    rmssd: 48.2,
-                    coverage: 0.92,
-                    hf: 0.28,
-                    lf: 0.18,
-                  },
-                ],
-              },
-            ],
+            minute: '2024-10-07T05:07:30.000',
+            value: {
+              rmssd: 45.5,
+              coverage: 0.95,
+              hf: 0.25,
+              lf: 0.15,
+            },
+          },
+          {
+            minute: '2024-10-07T05:12:30.000',
+            value: {
+              rmssd: 48.2,
+              coverage: 0.92,
+              hf: 0.28,
+              lf: 0.18,
+            },
           },
         ],
       },
@@ -67,38 +38,29 @@ describe('HRVIntraday', () => {
 
     const hrvIntradayResponse = HRVIntradayResponseFromJson(json);
     expect(hrvIntradayResponse.hRVIntraday).toBeDefined();
-    expect(hrvIntradayResponse.hRVIntraday?.hRvIntraday.length).toEqual(1);
-    expect(hrvIntradayResponse.hRVIntraday?.hRvIntraday[0].localDate).toEqual(
-      '2024-10-07',
+    expect(hrvIntradayResponse.hRVIntraday?.minutes.length).toEqual(2);
+    expect(hrvIntradayResponse.hRVIntraday?.minutes[0].minute).toEqual(
+      '2024-10-07T05:07:30.000',
     );
-    expect(
-      hrvIntradayResponse.hRVIntraday?.hRvIntraday[0].minutes.length,
-    ).toEqual(2);
-    expect(
-      hrvIntradayResponse.hRVIntraday?.hRvIntraday[0].minutes[0].minute,
-    ).toEqual(new Date('2024-10-07T05:07:30.000+09:00'));
-    expect(
-      hrvIntradayResponse.hRVIntraday?.hRvIntraday[0].minutes[0].value.length,
-    ).toEqual(1);
-    expect(
-      hrvIntradayResponse.hRVIntraday?.hRvIntraday[0].minutes[0].value[0].rmssd,
-    ).toEqual(45.5);
-    expect(
-      hrvIntradayResponse.hRVIntraday?.hRvIntraday[0].minutes[0].value[0]
-        .coverage,
-    ).toEqual(0.95);
-    expect(
-      hrvIntradayResponse.hRVIntraday?.hRvIntraday[0].minutes[0].value[0].hf,
-    ).toEqual(0.25);
-    expect(
-      hrvIntradayResponse.hRVIntraday?.hRvIntraday[0].minutes[0].value[0].lf,
-    ).toEqual(0.15);
-    expect(
-      hrvIntradayResponse.hRVIntraday?.hRvIntraday[0].minutes[1].minute,
-    ).toEqual(new Date('2024-10-07T05:12:30.000+09:00'));
-    expect(
-      hrvIntradayResponse.hRVIntraday?.hRvIntraday[0].minutes[1].value[0].rmssd,
-    ).toEqual(48.2);
+    expect(hrvIntradayResponse.hRVIntraday?.minutes[0].value.rmssd).toEqual(
+      45.5,
+    );
+    expect(hrvIntradayResponse.hRVIntraday?.minutes[0].value.coverage).toEqual(
+      0.95,
+    );
+    expect(hrvIntradayResponse.hRVIntraday?.minutes[0].value.hf).toEqual(0.25);
+    expect(hrvIntradayResponse.hRVIntraday?.minutes[0].value.lf).toEqual(0.15);
+    expect(hrvIntradayResponse.hRVIntraday?.minutes[1].minute).toEqual(
+      '2024-10-07T05:12:30.000',
+    );
+    expect(hrvIntradayResponse.hRVIntraday?.minutes[1].value.rmssd).toEqual(
+      48.2,
+    );
+    expect(hrvIntradayResponse.hRVIntraday?.minutes[1].value.coverage).toEqual(
+      0.92,
+    );
+    expect(hrvIntradayResponse.hRVIntraday?.minutes[1].value.hf).toEqual(0.28);
+    expect(hrvIntradayResponse.hRVIntraday?.minutes[1].value.lf).toEqual(0.18);
   });
 
   it('hrvフィールドがない場合でも問題なく型変換出来ること', () => {
@@ -108,55 +70,45 @@ describe('HRVIntraday', () => {
     expect(hrvIntradayResponse.hRVIntraday).toBeUndefined();
   });
 
-  it('複数のvalueがある場合でも問題なく型変換出来ること', () => {
+  it('複数のminutesがある場合でも問題なく型変換出来ること', () => {
     const json = {
       hrv: [
         {
           dateTime: '2024-10-07',
-          minutes: [
-            {
-              minute: new Date('2024-10-07T05:07:30.000+09:00'),
-              value: [
-                {
-                  rmssd: 45.5,
-                  coverage: 0.95,
-                  hf: 0.25,
-                  lf: 0.15,
-                },
-                {
-                  rmssd: 46.8,
-                  coverage: 0.93,
-                  hf: 0.26,
-                  lf: 0.16,
-                },
-              ],
-            },
-          ],
+          value: {
+            dailyRmssd: 45.5,
+            deepRmssd: 52.3,
+          },
         },
       ],
       'hrv-intraday': {
-        hrv: [
+        minutes: [
           {
-            dateTime: '2024-10-07',
-            minutes: [
-              {
-                minute: new Date('2024-10-07T05:07:30.000+09:00'),
-                value: [
-                  {
-                    rmssd: 45.5,
-                    coverage: 0.95,
-                    hf: 0.25,
-                    lf: 0.15,
-                  },
-                  {
-                    rmssd: 46.8,
-                    coverage: 0.93,
-                    hf: 0.26,
-                    lf: 0.16,
-                  },
-                ],
-              },
-            ],
+            minute: '2024-10-07T05:07:30.000',
+            value: {
+              rmssd: 45.5,
+              coverage: 0.95,
+              hf: 0.25,
+              lf: 0.15,
+            },
+          },
+          {
+            minute: '2024-10-07T05:12:30.000',
+            value: {
+              rmssd: 46.8,
+              coverage: 0.93,
+              hf: 0.26,
+              lf: 0.16,
+            },
+          },
+          {
+            minute: '2024-10-07T05:17:30.000',
+            value: {
+              rmssd: 47.2,
+              coverage: 0.94,
+              hf: 0.27,
+              lf: 0.17,
+            },
           },
         ],
       },
@@ -164,14 +116,15 @@ describe('HRVIntraday', () => {
 
     const hrvIntradayResponse = HRVIntradayResponseFromJson(json);
     expect(hrvIntradayResponse.hRVIntraday).toBeDefined();
-    expect(
-      hrvIntradayResponse.hRVIntraday?.hRvIntraday[0].minutes[0].value.length,
-    ).toEqual(2);
-    expect(
-      hrvIntradayResponse.hRVIntraday?.hRvIntraday[0].minutes[0].value[0].rmssd,
-    ).toEqual(45.5);
-    expect(
-      hrvIntradayResponse.hRVIntraday?.hRvIntraday[0].minutes[0].value[1].rmssd,
-    ).toEqual(46.8);
+    expect(hrvIntradayResponse.hRVIntraday?.minutes.length).toEqual(3);
+    expect(hrvIntradayResponse.hRVIntraday?.minutes[0].value.rmssd).toEqual(
+      45.5,
+    );
+    expect(hrvIntradayResponse.hRVIntraday?.minutes[1].value.rmssd).toEqual(
+      46.8,
+    );
+    expect(hrvIntradayResponse.hRVIntraday?.minutes[2].value.rmssd).toEqual(
+      47.2,
+    );
   });
 });

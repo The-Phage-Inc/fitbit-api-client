@@ -25,9 +25,9 @@ export interface HRVData {
    */
   localDate: string;
   /**
-   *
+   * 心拍変動の値
    */
-  value: HRVValue[];
+  value: HRVValue;
 }
 
 export interface HRVValue {
@@ -44,7 +44,7 @@ export interface HRVValue {
 function HRVDataFromJson(json: unknown): HRVData {
   return {
     localDate: get<string>(json, 'dateTime'),
-    value: get<unknown[]>(json, 'value').map((data) => HRVValueFromJson(data)),
+    value: HRVValueFromJson(get<unknown>(json, 'value')),
   };
 }
 

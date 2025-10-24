@@ -114,7 +114,7 @@ app.get('/fitbit/sleep', async (req, res) => {
 
   // 睡眠記録を取得
   const sleep = await client.sleep.getSleepLog(
-    '2024-10-07',
+    '2025-10-01',
     profile.user.offsetFromUTCMillis,
   );
   res.status(200).json(sleep);
@@ -138,7 +138,7 @@ app.get('/fitbit/heartrate/summary', async (req, res) => {
   // アクセストークンの更新
   await client.auth.refreshAccessToken();
 
-  const hRVSummary = await client.heartRate.getHRVSummary('2024-10-07');
+  const hRVSummary = await client.heartRate.getHRVSummary('2025-08-27');
 
   console.log('summary', hRVSummary);
   res.status(200).json(hRVSummary);

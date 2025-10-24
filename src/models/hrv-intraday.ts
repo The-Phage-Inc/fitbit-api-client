@@ -14,8 +14,8 @@ export interface HRVIntradayResponse {
 export function HRVIntradayResponseFromJson(
   json: unknown,
 ): HRVIntradayResponse {
-  const hRVIntraday = exists(json, 'hrv')
-    ? HRVIntradayFromJson(get<unknown[]>(json, 'hrv-intraday'))
+  const hRVIntraday = exists(json, 'hrv-intraday')
+    ? HRVIntradayFromJson(get<unknown>(json, 'hrv-intraday'))
     : undefined;
 
   return {
@@ -29,21 +29,6 @@ export function HRVIntradayResponseFromJson(
  */
 export interface HRVIntraday {
   /**
-   * 心拍変動の詳細データ
-   */
-  hRvIntraday: HRVIntradayData[];
-}
-
-/**
- * 心拍変動の詳細データ
- */
-export interface HRVIntradayData {
-  /**
-   * 睡眠ログが記録された時のローカル日時
-   * 'yyyy-MM-dd'
-   */
-  localDate: string;
-  /**
    * 特定の時間ごとのデータ
    */
   minutes: HRVIntradayMinute[];
@@ -56,11 +41,11 @@ export interface HRVIntradayMinute {
   /**
    * 時間
    */
-  minute: Date;
+  minute: string;
   /**
    * 心拍変動の詳細データ
    */
-  value: HRVIntradayValue[];
+  value: HRVIntradayValue;
 }
 
 /**
@@ -93,15 +78,6 @@ export interface HRVIntradayValue {
 
 function HRVIntradayFromJson(json: unknown): HRVIntraday {
   return {
-    hRvIntraday: get<unknown[]>(json, 'hrv').map((data) =>
-      HRVIntradayDataFromJson(data),
-    ),
-  };
-}
-
-function HRVIntradayDataFromJson(json: unknown): HRVIntradayData {
-  return {
-    localDate: get<string>(json, 'dateTime'),
     minutes: get<unknown[]>(json, 'minutes').map((data) =>
       HRVIntradayMinuteDataFromJson(data),
     ),
@@ -110,10 +86,8 @@ function HRVIntradayDataFromJson(json: unknown): HRVIntradayData {
 
 function HRVIntradayMinuteDataFromJson(json: unknown): HRVIntradayMinute {
   return {
-    minute: get<Date>(json, 'minute'),
-    value: get<unknown[]>(json, 'value').map((data) =>
-      HRVIntradayValueDataFromJson(data),
-    ),
+    minute: get<string>(json, 'minute'),
+    value: HRVIntradayValueDataFromJson(get<unknown>(json, 'value')),
   };
 }
 
