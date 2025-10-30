@@ -1,4 +1,5 @@
 import { exists, get } from '../utils/types.utils';
+import { convertToOffsetDate } from '../utils/date.utils';
 
 /**
  * 心拍変動の詳細データのレスポンス
@@ -12,11 +13,14 @@ export interface HRVIntradayResponse {
 }
 
 export function HRVIntradayResponseFromJson(
+  offsetFromUTCMillis: number,
   json: unknown,
 ): HRVIntradayResponse {
   const hrvData = exists(json, 'hrv') ? get<unknown[]>(json, 'hrv') : [];
 
-  const hRVIntraday = hrvData.map((data) => HRVIntradayFromJson(data));
+  const hRVIntraday = hrvData.map((data) =>
+    HRVIntradayFromJson(data, offsetFromUTCMillis),
+  );
 
   return {
     hRVIntraday: hRVIntraday,
@@ -46,7 +50,7 @@ export interface HRVIntradayMinute {
   /**
    * 時間
    */
-  minute: string;
+  minute: Date;
   /**
    * 心拍変動の詳細データ
    */
@@ -81,18 +85,27 @@ export interface HRVIntradayValue {
   lf: number;
 }
 
-function HRVIntradayFromJson(json: unknown): HRVIntraday {
+function HRVIntradayFromJson(
+  json: unknown,
+  offsetFromUTCMillis: number,
+): HRVIntraday {
   return {
     localDate: get<string>(json, 'dateTime'),
     minutes: get<unknown[]>(json, 'minutes').map((data) =>
-      HRVIntradayMinuteDataFromJson(data),
+      HRVIntradayMinuteDataFromJson(data, offsetFromUTCMillis),
     ),
   };
 }
 
-function HRVIntradayMinuteDataFromJson(json: unknown): HRVIntradayMinute {
+function HRVIntradayMinuteDataFromJson(
+  json: unknown,
+  offsetFromUTCMillis: number,
+): HRVIntradayMinute {
   return {
-    minute: get<string>(json, 'minute'),
+    minute: convertToOffsetDate(
+      new Date(`${get<string>(json, 'minute')}Z`),
+      offsetFromUTCMillis,
+    ),
     value: HRVIntradayValueDataFromJson(get<unknown>(json, 'value')),
   };
 }

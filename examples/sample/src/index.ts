@@ -9,6 +9,7 @@ dotenv.config({ path: '.env.local' });
 const CLIENT_ID = process.env.CLIENT_ID as string;
 const CLIENT_SECRET = process.env.CLIENT_SECRET as string;
 const REDIRECT_URI = process.env.REDIRECT_URI as string;
+const offsetFromUTCMillis = 9 * 60 * 60 * 1000;
 
 if (CLIENT_ID == null || CLIENT_SECRET == null || REDIRECT_URI == null) {
   throw new Error('環境変数が設定されていません');
@@ -160,7 +161,10 @@ app.get('/fitbit/heartrate/intraday', async (req, res) => {
   // アクセストークンの更新
   await client.auth.refreshAccessToken();
 
-  const hRVIntraday = await client.heartRate.getHRVIntraday('2024-10-07');
+  const hRVIntraday = await client.heartRate.getHRVIntraday(
+    '2025-08-27',
+    offsetFromUTCMillis,
+  );
   res.status(200).json(hRVIntraday);
 });
 

@@ -139,7 +139,10 @@ export class FitbitClient {
     ) => Promise<unknown>;
     getHRVSummary: (localDate: string) => Promise<HRVSummaryResponse>;
     getHRVSummaryRaw: (localDate: string) => Promise<unknown>;
-    getHRVIntraday: (localDate: string) => Promise<HRVIntradayResponse>;
+    getHRVIntraday: (
+      localDate: string,
+      offsetFromUTCMillis: number,
+    ) => Promise<HRVIntradayResponse>;
     getHRVIntradayRaw: (localDate: string) => Promise<unknown>;
   };
 
@@ -399,12 +402,14 @@ export class FitbitClient {
 
   private async getHRVIntraday(
     localDate: string,
+    offsetFromUTCMillis: number,
   ): Promise<HRVIntradayResponse> {
     const accessToken = await this.auth.getAccessToken();
     return await heartRateApi.getHRVIntradayByDate(
       {
         localDate,
       },
+      offsetFromUTCMillis,
       { accessToken },
     );
   }

@@ -95,13 +95,16 @@ export class HeartRateApi extends BaseApi {
   /**
    * https://dev.fitbit.com/build/reference/web-api/intraday/get-hrv-intraday-by-date/
    * @param request
+   * @param offsetFromUTCMillis
    * @param options
    */
   async getHRVIntradayByDate(
     request: GetHRVIntradayRequest,
+    offsetFromUTCMillis: number,
     options: TokenRequestOptions,
   ): Promise<HRVIntradayResponse> {
     return HRVIntradayResponseFromJson(
+      offsetFromUTCMillis,
       await this.getHRVIntradayByDateRaw(request, options),
     );
   }
