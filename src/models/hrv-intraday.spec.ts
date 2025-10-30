@@ -6,7 +6,7 @@ describe('HRVIntraday', () => {
     const json = {
       hrv: [
         {
-          localDate: '2024-10-07',
+          dateTime: '2024-10-07',
           minutes: [
             {
               minute: '2024-10-07T05:07:30.000',
@@ -87,7 +87,7 @@ describe('HRVIntraday', () => {
     const json = {
       hrv: [
         {
-          localDate: '2024-10-07',
+          dateTime: '2024-10-07',
           minutes: [
             {
               minute: '2024-10-07T05:07:30.000',
@@ -182,7 +182,7 @@ describe('HRVIntraday', () => {
     const fitbitJson = {
       hrv: [
         {
-          localDate: '2025-10-14',
+          dateTime: '2025-10-14',
           minutes: [
             {
               minute: '2025-10-14T02:25:00.000',
