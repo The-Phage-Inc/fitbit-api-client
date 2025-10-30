@@ -139,8 +139,6 @@ app.get('/fitbit/heartrate/summary', async (req, res) => {
   await client.auth.refreshAccessToken();
 
   const hRVSummary = await client.heartRate.getHRVSummary('2024-10-07');
-
-  console.log('summary', hRVSummary);
   res.status(200).json(hRVSummary);
 });
 
@@ -163,7 +161,6 @@ app.get('/fitbit/heartrate/intraday', async (req, res) => {
   await client.auth.refreshAccessToken();
 
   const hRVIntraday = await client.heartRate.getHRVIntraday('2024-10-07');
-  console.log('intraday', hRVIntraday);
   res.status(200).json(hRVIntraday);
 });
 
