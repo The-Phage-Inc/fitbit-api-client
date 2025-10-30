@@ -8,18 +8,18 @@ export interface HRVIntradayResponse {
    * 心拍変動の詳細データ
    * 取得にはIntradayの申請もしくはApplicationTypeがPersonalである必要があります。
    */
-  hRVIntraday?: HRVIntraday;
+  hRVIntraday: HRVIntraday[];
 }
 
 export function HRVIntradayResponseFromJson(
   json: unknown,
 ): HRVIntradayResponse {
-  const hRVIntraday = exists(json, 'hrv')
-    ? HRVIntradayFromJson(get<unknown>(json, 'hrv'))
-    : undefined;
+  const hrvData = exists(json, 'hrv') ? get<unknown[]>(json, 'hrv') : [];
+
+  const hRVIntraday = hrvData.map((data) => HRVIntradayFromJson(data));
 
   return {
-    hRVIntraday,
+    hRVIntraday: hRVIntraday,
   };
 }
 
@@ -28,6 +28,11 @@ export function HRVIntradayResponseFromJson(
  * 取得にはIntradayの申請もしくはApplicationTypeがPersonalである必要があります。
  */
 export interface HRVIntraday {
+  /**
+   * ローカル日付
+   * 'yyyy-MM-dd'
+   */
+  localDate: string;
   /**
    * 特定の時間ごとのデータ
    */
@@ -78,6 +83,7 @@ export interface HRVIntradayValue {
 
 function HRVIntradayFromJson(json: unknown): HRVIntraday {
   return {
+    localDate: get<string>(json, 'dateTime'),
     minutes: get<unknown[]>(json, 'minutes').map((data) =>
       HRVIntradayMinuteDataFromJson(data),
     ),
