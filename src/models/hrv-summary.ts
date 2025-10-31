@@ -7,14 +7,14 @@ export interface HRVSummaryResponse {
   /**
    * 心拍変動のデータ一覧
    */
-  hRV: HRVData[];
+  hRVSummary: HRVData[];
 }
 
 export function HRVSummaryResponseFromJson(json: unknown): HRVSummaryResponse {
   const hRV = get<unknown[]>(json, 'hrv').map((data) => HRVDataFromJson(data));
 
   return {
-    hRV,
+    hRVSummary: hRV,
   };
 }
 

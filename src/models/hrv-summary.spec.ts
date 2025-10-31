@@ -22,13 +22,13 @@ describe('HRVSummary', () => {
     };
 
     const hrvSummaryResponse = HRVSummaryResponseFromJson(json);
-    expect(hrvSummaryResponse.hRV.length).toEqual(2);
-    expect(hrvSummaryResponse.hRV[0].localDate).toEqual('2024-10-07');
-    expect(hrvSummaryResponse.hRV[0].value.dailyRmssd).toEqual(45.5);
-    expect(hrvSummaryResponse.hRV[0].value.deepRmssd).toEqual(52.3);
-    expect(hrvSummaryResponse.hRV[1].localDate).toEqual('2024-10-08');
-    expect(hrvSummaryResponse.hRV[1].value.dailyRmssd).toEqual(48.2);
-    expect(hrvSummaryResponse.hRV[1].value.deepRmssd).toEqual(55.1);
+    expect(hrvSummaryResponse.hRVSummary.length).toEqual(2);
+    expect(hrvSummaryResponse.hRVSummary[0].localDate).toEqual('2024-10-07');
+    expect(hrvSummaryResponse.hRVSummary[0].value.dailyRmssd).toEqual(45.5);
+    expect(hrvSummaryResponse.hRVSummary[0].value.deepRmssd).toEqual(52.3);
+    expect(hrvSummaryResponse.hRVSummary[1].localDate).toEqual('2024-10-08');
+    expect(hrvSummaryResponse.hRVSummary[1].value.dailyRmssd).toEqual(48.2);
+    expect(hrvSummaryResponse.hRVSummary[1].value.deepRmssd).toEqual(55.1);
   });
 
   it('複数の日付のデータがある場合でも問題なく型変換出来ること', () => {
@@ -59,15 +59,15 @@ describe('HRVSummary', () => {
     };
 
     const hrvSummaryResponse = HRVSummaryResponseFromJson(json);
-    expect(hrvSummaryResponse.hRV.length).toEqual(3);
-    expect(hrvSummaryResponse.hRV[0].localDate).toEqual('2024-10-07');
-    expect(hrvSummaryResponse.hRV[0].value.dailyRmssd).toEqual(45.5);
-    expect(hrvSummaryResponse.hRV[0].value.deepRmssd).toEqual(52.3);
-    expect(hrvSummaryResponse.hRV[1].localDate).toEqual('2024-10-08');
-    expect(hrvSummaryResponse.hRV[1].value.dailyRmssd).toEqual(46.8);
-    expect(hrvSummaryResponse.hRV[1].value.deepRmssd).toEqual(53.7);
-    expect(hrvSummaryResponse.hRV[2].localDate).toEqual('2024-10-09');
-    expect(hrvSummaryResponse.hRV[2].value.dailyRmssd).toEqual(47.2);
-    expect(hrvSummaryResponse.hRV[2].value.deepRmssd).toEqual(54.1);
+    expect(hrvSummaryResponse.hRVSummary.length).toEqual(3);
+    expect(hrvSummaryResponse.hRVSummary[0].localDate).toEqual('2024-10-07');
+    expect(hrvSummaryResponse.hRVSummary[0].value.dailyRmssd).toEqual(45.5);
+    expect(hrvSummaryResponse.hRVSummary[0].value.deepRmssd).toEqual(52.3);
+    expect(hrvSummaryResponse.hRVSummary[1].localDate).toEqual('2024-10-08');
+    expect(hrvSummaryResponse.hRVSummary[1].value.dailyRmssd).toEqual(46.8);
+    expect(hrvSummaryResponse.hRVSummary[1].value.deepRmssd).toEqual(53.7);
+    expect(hrvSummaryResponse.hRVSummary[2].localDate).toEqual('2024-10-09');
+    expect(hrvSummaryResponse.hRVSummary[2].value.dailyRmssd).toEqual(47.2);
+    expect(hrvSummaryResponse.hRVSummary[2].value.deepRmssd).toEqual(54.1);
   });
 });
