@@ -182,209 +182,459 @@ describe('HRVIntraday', () => {
     const fitbitJson = {
       hrv: [
         {
-          dateTime: '2025-10-14',
           minutes: [
             {
+              value: {
+                rmssd: 71.841,
+                coverage: 0.864,
+                hf: 512.47,
+                lf: 3213.718,
+              },
               minute: '2025-10-14T02:25:00.000',
-              value: { rmssd: 71.841, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 75.641,
+                coverage: 0.921,
+                hf: 963.91,
+                lf: 2509.695,
+              },
               minute: '2025-10-14T02:30:00.000',
-              value: { rmssd: 75.641, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 79.315,
+                coverage: 0.975,
+                hf: 930.394,
+                lf: 833.697,
+              },
               minute: '2025-10-14T02:35:00.000',
-              value: { rmssd: 79.315, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 83.103,
+                coverage: 0.927,
+                hf: 1208.774,
+                lf: 1836.921,
+              },
               minute: '2025-10-14T02:40:00.000',
-              value: { rmssd: 83.103, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 77.341,
+                coverage: 0.886,
+                hf: 1210.176,
+                lf: 744.785,
+              },
               minute: '2025-10-14T03:00:00.000',
-              value: { rmssd: 77.341, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 45.338,
+                coverage: 0.884,
+                hf: 351.841,
+                lf: 524.131,
+              },
               minute: '2025-10-14T03:05:00.000',
-              value: { rmssd: 45.338, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 63.953,
+                coverage: 0.814,
+                hf: 1030.81,
+                lf: 1277.989,
+              },
               minute: '2025-10-14T03:10:00.000',
-              value: { rmssd: 63.953, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 74.139,
+                coverage: 0.933,
+                hf: 798.525,
+                lf: 1184.857,
+              },
               minute: '2025-10-14T03:20:00.000',
-              value: { rmssd: 74.139, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 29.505,
+                coverage: 0.927,
+                hf: 297.017,
+                lf: 1175.56,
+              },
               minute: '2025-10-14T03:25:00.000',
-              value: { rmssd: 29.505, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 74.782,
+                coverage: 0.914,
+                hf: 705.827,
+                lf: 1793.416,
+              },
               minute: '2025-10-14T03:40:00.000',
-              value: { rmssd: 74.782, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 71.871,
+                coverage: 0.936,
+                hf: 969.725,
+                lf: 471.999,
+              },
               minute: '2025-10-14T03:45:00.000',
-              value: { rmssd: 71.871, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 90.507,
+                coverage: 1.002,
+                hf: 1338.95,
+                lf: 757.661,
+              },
               minute: '2025-10-14T03:50:00.000',
-              value: { rmssd: 90.507, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 128.997,
+                coverage: 0.946,
+                hf: 2488.285,
+                lf: 829.574,
+              },
               minute: '2025-10-14T04:00:00.000',
-              value: { rmssd: 128.997, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 105.231,
+                coverage: 0.942,
+                hf: 1501.178,
+                lf: 331.256,
+              },
               minute: '2025-10-14T04:20:00.000',
-              value: { rmssd: 105.231, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 108.002,
+                coverage: 0.873,
+                hf: 1577.863,
+                lf: 1426.896,
+              },
               minute: '2025-10-14T04:25:00.000',
-              value: { rmssd: 108.002, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 86.191,
+                coverage: 1.004,
+                hf: 1206.419,
+                lf: 482.541,
+              },
               minute: '2025-10-14T04:30:00.000',
-              value: { rmssd: 86.191, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 86.051,
+                coverage: 1.001,
+                hf: 1432.504,
+                lf: 413.246,
+              },
               minute: '2025-10-14T04:35:00.000',
-              value: { rmssd: 86.051, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 76.834,
+                coverage: 1.005,
+                hf: 1134.286,
+                lf: 388.081,
+              },
               minute: '2025-10-14T04:40:00.000',
-              value: { rmssd: 76.834, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 77.561,
+                coverage: 1.005,
+                hf: 1273.712,
+                lf: 281.468,
+              },
               minute: '2025-10-14T04:45:00.000',
-              value: { rmssd: 77.561, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 84.567,
+                coverage: 1.001,
+                hf: 1020.75,
+                lf: 2466.274,
+              },
               minute: '2025-10-14T04:50:00.000',
-              value: { rmssd: 84.567, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 74.39,
+                coverage: 1.005,
+                hf: 1142.572,
+                lf: 166.714,
+              },
               minute: '2025-10-14T04:55:00.000',
-              value: { rmssd: 74.39, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 73.117,
+                coverage: 0.873,
+                hf: 1129.713,
+                lf: 357.414,
+              },
               minute: '2025-10-14T05:00:00.000',
-              value: { rmssd: 73.117, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 77.315,
+                coverage: 0.769,
+                hf: 949.197,
+                lf: 1287.311,
+              },
               minute: '2025-10-14T05:05:00.000',
-              value: { rmssd: 77.315, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 89.261,
+                coverage: 0.715,
+                hf: 1756.907,
+                lf: 3544.92,
+              },
               minute: '2025-10-14T05:10:00.000',
-              value: { rmssd: 89.261, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 75.464,
+                coverage: 0.79,
+                hf: 1268.478,
+                lf: 1082.202,
+              },
               minute: '2025-10-14T05:30:00.000',
-              value: { rmssd: 75.464, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 80.607,
+                coverage: 0.729,
+                hf: 946.016,
+                lf: 2790.421,
+              },
               minute: '2025-10-14T05:35:00.000',
-              value: { rmssd: 80.607, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 100.47,
+                coverage: 0.779,
+                hf: 1601.679,
+                lf: 2930.757,
+              },
               minute: '2025-10-14T05:40:00.000',
-              value: { rmssd: 100.47, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 85.194,
+                coverage: 0.968,
+                hf: 1320.485,
+                lf: 5866.716,
+              },
               minute: '2025-10-14T05:50:00.000',
-              value: { rmssd: 85.194, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 53.26,
+                coverage: 0.777,
+                hf: 620.894,
+                lf: 4851.49,
+              },
               minute: '2025-10-14T05:55:00.000',
-              value: { rmssd: 53.26, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 65.87,
+                coverage: 0.906,
+                hf: 650.705,
+                lf: 2672.076,
+              },
               minute: '2025-10-14T06:00:00.000',
-              value: { rmssd: 65.87, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 79.297,
+                coverage: 0.982,
+                hf: 1174.452,
+                lf: 2733.738,
+              },
               minute: '2025-10-14T06:05:00.000',
-              value: { rmssd: 79.297, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 85.332,
+                coverage: 0.947,
+                hf: 1247.196,
+                lf: 6607.423,
+              },
               minute: '2025-10-14T06:10:00.000',
-              value: { rmssd: 85.332, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 73.544,
+                coverage: 0.795,
+                hf: 813.578,
+                lf: 6011.86,
+              },
               minute: '2025-10-14T06:15:00.000',
-              value: { rmssd: 73.544, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 64.704,
+                coverage: 0.819,
+                hf: 1010.555,
+                lf: 2084.832,
+              },
               minute: '2025-10-14T06:20:00.000',
-              value: { rmssd: 64.704, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 37.107,
+                coverage: 1.003,
+                hf: 239.076,
+                lf: 956.103,
+              },
               minute: '2025-10-14T06:25:00.000',
-              value: { rmssd: 37.107, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 22.198,
+                coverage: 0.726,
+                hf: 117.927,
+                lf: 539.171,
+              },
               minute: '2025-10-14T06:30:00.000',
-              value: { rmssd: 22.198, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 90.307,
+                coverage: 0.851,
+                hf: 1383.067,
+                lf: 9080.806,
+              },
               minute: '2025-10-14T07:30:00.000',
-              value: { rmssd: 90.307, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 87.027,
+                coverage: 0.983,
+                hf: 1650.812,
+                lf: 1554.714,
+              },
               minute: '2025-10-14T07:35:00.000',
-              value: { rmssd: 87.027, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 82.524,
+                coverage: 0.938,
+                hf: 1310.99,
+                lf: 2339.539,
+              },
               minute: '2025-10-14T07:40:00.000',
-              value: { rmssd: 82.524, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 74.364,
+                coverage: 1.005,
+                hf: 1216.019,
+                lf: 1202.025,
+              },
               minute: '2025-10-14T07:45:00.000',
-              value: { rmssd: 74.364, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 87.109,
+                coverage: 0.955,
+                hf: 1284.971,
+                lf: 2648.302,
+              },
               minute: '2025-10-14T07:50:00.000',
-              value: { rmssd: 87.109, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 75.911,
+                coverage: 0.913,
+                hf: 1388.851,
+                lf: 2662.252,
+              },
               minute: '2025-10-14T07:55:00.000',
-              value: { rmssd: 75.911, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 62.548,
+                coverage: 1.003,
+                hf: 1320.046,
+                lf: 342.554,
+              },
               minute: '2025-10-14T08:00:00.000',
-              value: { rmssd: 62.548, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 66.518,
+                coverage: 0.824,
+                hf: 1317.98,
+                lf: 367.929,
+              },
               minute: '2025-10-14T08:05:00.000',
-              value: { rmssd: 66.518, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 70.275,
+                coverage: 0.9,
+                hf: 1193.324,
+                lf: 2493.988,
+              },
               minute: '2025-10-14T08:10:00.000',
-              value: { rmssd: 70.275, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 67.2,
+                coverage: 0.918,
+                hf: 744.026,
+                lf: 2171.039,
+              },
               minute: '2025-10-14T08:30:00.000',
-              value: { rmssd: 67.2, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 67.444,
+                coverage: 0.939,
+                hf: 911.145,
+                lf: 4310.475,
+              },
               minute: '2025-10-14T08:35:00.000',
-              value: { rmssd: 67.444, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 69.976,
+                coverage: 0.989,
+                hf: 1457.141,
+                lf: 1684.807,
+              },
               minute: '2025-10-14T08:40:00.000',
-              value: { rmssd: 69.976, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 67.085,
+                coverage: 0.991,
+                hf: 1168.868,
+                lf: 622.291,
+              },
               minute: '2025-10-14T08:45:00.000',
-              value: { rmssd: 67.085, coverage: 0, hf: 0, lf: 0 },
             },
             {
+              value: {
+                rmssd: 67.336,
+                coverage: 0.929,
+                hf: 786.823,
+                lf: 3916.351,
+              },
               minute: '2025-10-14T08:50:00.000',
-              value: { rmssd: 67.336, coverage: 0, hf: 0, lf: 0 },
             },
           ],
+          dateTime: '2025-10-14',
         },
       ],
     };
@@ -405,6 +655,7 @@ describe('HRVIntraday', () => {
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[0].value.rmssd).toEqual(
       71.841,
     );
+
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[1].minute).toEqual(
       new Date('2025-10-14T02:30:00.000+09:00'),
     );
