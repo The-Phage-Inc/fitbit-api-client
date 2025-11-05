@@ -655,12 +655,29 @@ describe('HRVIntraday', () => {
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[0].value.rmssd).toEqual(
       71.841,
     );
-
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[0].value.coverage,
+    ).toEqual(0.864);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[0].value.hf).toEqual(
+      512.47,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[0].value.lf).toEqual(
+      3213.718,
+    );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[1].minute).toEqual(
       new Date('2025-10-14T02:30:00.000+09:00'),
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[1].value.rmssd).toEqual(
       75.641,
+    );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[1].value.coverage,
+    ).toEqual(0.921);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[1].value.hf).toEqual(
+      963.91,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[1].value.lf).toEqual(
+      2509.695,
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[2].minute).toEqual(
       new Date('2025-10-14T02:35:00.000+09:00'),
@@ -668,11 +685,29 @@ describe('HRVIntraday', () => {
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[2].value.rmssd).toEqual(
       79.315,
     );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[2].value.coverage,
+    ).toEqual(0.975);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[2].value.hf).toEqual(
+      930.394,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[2].value.lf).toEqual(
+      833.697,
+    );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[3].minute).toEqual(
       new Date('2025-10-14T02:40:00.000+09:00'),
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[3].value.rmssd).toEqual(
       83.103,
+    );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[3].value.coverage,
+    ).toEqual(0.927);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[3].value.hf).toEqual(
+      1208.774,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[3].value.lf).toEqual(
+      1836.921,
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[4].minute).toEqual(
       new Date('2025-10-14T03:00:00.000+09:00'),
@@ -680,11 +715,29 @@ describe('HRVIntraday', () => {
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[4].value.rmssd).toEqual(
       77.341,
     );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[4].value.coverage,
+    ).toEqual(0.886);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[4].value.hf).toEqual(
+      1210.176,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[4].value.lf).toEqual(
+      744.785,
+    );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[5].minute).toEqual(
       new Date('2025-10-14T03:05:00.000+09:00'),
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[5].value.rmssd).toEqual(
       45.338,
+    );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[5].value.coverage,
+    ).toEqual(0.884);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[5].value.hf).toEqual(
+      351.841,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[5].value.lf).toEqual(
+      524.131,
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[6].minute).toEqual(
       new Date('2025-10-14T03:10:00.000+09:00'),
@@ -692,11 +745,29 @@ describe('HRVIntraday', () => {
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[6].value.rmssd).toEqual(
       63.953,
     );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[6].value.coverage,
+    ).toEqual(0.814);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[6].value.hf).toEqual(
+      1030.81,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[6].value.lf).toEqual(
+      1277.989,
+    );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[7].minute).toEqual(
       new Date('2025-10-14T03:20:00.000+09:00'),
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[7].value.rmssd).toEqual(
       74.139,
+    );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[7].value.coverage,
+    ).toEqual(0.933);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[7].value.hf).toEqual(
+      798.525,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[7].value.lf).toEqual(
+      1184.857,
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[8].minute).toEqual(
       new Date('2025-10-14T03:25:00.000+09:00'),
@@ -704,11 +775,29 @@ describe('HRVIntraday', () => {
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[8].value.rmssd).toEqual(
       29.505,
     );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[8].value.coverage,
+    ).toEqual(0.927);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[8].value.hf).toEqual(
+      297.017,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[8].value.lf).toEqual(
+      1175.56,
+    );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[9].minute).toEqual(
       new Date('2025-10-14T03:40:00.000+09:00'),
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[9].value.rmssd).toEqual(
       74.782,
+    );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[9].value.coverage,
+    ).toEqual(0.914);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[9].value.hf).toEqual(
+      705.827,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[9].value.lf).toEqual(
+      1793.416,
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[10].minute).toEqual(
       new Date('2025-10-14T03:45:00.000+09:00'),
@@ -716,11 +805,29 @@ describe('HRVIntraday', () => {
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[10].value.rmssd).toEqual(
       71.871,
     );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[10].value.coverage,
+    ).toEqual(0.936);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[10].value.hf).toEqual(
+      969.725,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[10].value.lf).toEqual(
+      471.999,
+    );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[11].minute).toEqual(
       new Date('2025-10-14T03:50:00.000+09:00'),
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[11].value.rmssd).toEqual(
       90.507,
+    );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[11].value.coverage,
+    ).toEqual(1.002);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[11].value.hf).toEqual(
+      1338.95,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[11].value.lf).toEqual(
+      757.661,
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[12].minute).toEqual(
       new Date('2025-10-14T04:00:00.000+09:00'),
@@ -728,11 +835,29 @@ describe('HRVIntraday', () => {
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[12].value.rmssd).toEqual(
       128.997,
     );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[12].value.coverage,
+    ).toEqual(0.946);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[12].value.hf).toEqual(
+      2488.285,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[12].value.lf).toEqual(
+      829.574,
+    );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[13].minute).toEqual(
       new Date('2025-10-14T04:20:00.000+09:00'),
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[13].value.rmssd).toEqual(
       105.231,
+    );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[13].value.coverage,
+    ).toEqual(0.942);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[13].value.hf).toEqual(
+      1501.178,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[13].value.lf).toEqual(
+      331.256,
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[14].minute).toEqual(
       new Date('2025-10-14T04:25:00.000+09:00'),
@@ -740,11 +865,29 @@ describe('HRVIntraday', () => {
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[14].value.rmssd).toEqual(
       108.002,
     );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[14].value.coverage,
+    ).toEqual(0.873);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[14].value.hf).toEqual(
+      1577.863,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[14].value.lf).toEqual(
+      1426.896,
+    );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[15].minute).toEqual(
       new Date('2025-10-14T04:30:00.000+09:00'),
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[15].value.rmssd).toEqual(
       86.191,
+    );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[15].value.coverage,
+    ).toEqual(1.004);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[15].value.hf).toEqual(
+      1206.419,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[15].value.lf).toEqual(
+      482.541,
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[16].minute).toEqual(
       new Date('2025-10-14T04:35:00.000+09:00'),
@@ -752,11 +895,29 @@ describe('HRVIntraday', () => {
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[16].value.rmssd).toEqual(
       86.051,
     );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[16].value.coverage,
+    ).toEqual(1.001);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[16].value.hf).toEqual(
+      1432.504,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[16].value.lf).toEqual(
+      413.246,
+    );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[17].minute).toEqual(
       new Date('2025-10-14T04:40:00.000+09:00'),
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[17].value.rmssd).toEqual(
       76.834,
+    );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[17].value.coverage,
+    ).toEqual(1.005);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[17].value.hf).toEqual(
+      1134.286,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[17].value.lf).toEqual(
+      388.081,
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[18].minute).toEqual(
       new Date('2025-10-14T04:45:00.000+09:00'),
@@ -764,11 +925,29 @@ describe('HRVIntraday', () => {
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[18].value.rmssd).toEqual(
       77.561,
     );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[18].value.coverage,
+    ).toEqual(1.005);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[18].value.hf).toEqual(
+      1273.712,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[18].value.lf).toEqual(
+      281.468,
+    );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[19].minute).toEqual(
       new Date('2025-10-14T04:50:00.000+09:00'),
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[19].value.rmssd).toEqual(
       84.567,
+    );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[19].value.coverage,
+    ).toEqual(1.001);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[19].value.hf).toEqual(
+      1020.75,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[19].value.lf).toEqual(
+      2466.274,
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[20].minute).toEqual(
       new Date('2025-10-14T04:55:00.000+09:00'),
@@ -776,11 +955,29 @@ describe('HRVIntraday', () => {
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[20].value.rmssd).toEqual(
       74.39,
     );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[20].value.coverage,
+    ).toEqual(1.005);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[20].value.hf).toEqual(
+      1142.572,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[20].value.lf).toEqual(
+      166.714,
+    );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[21].minute).toEqual(
       new Date('2025-10-14T05:00:00.000+09:00'),
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[21].value.rmssd).toEqual(
       73.117,
+    );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[21].value.coverage,
+    ).toEqual(0.873);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[21].value.hf).toEqual(
+      1129.713,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[21].value.lf).toEqual(
+      357.414,
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[22].minute).toEqual(
       new Date('2025-10-14T05:05:00.000+09:00'),
@@ -788,11 +985,29 @@ describe('HRVIntraday', () => {
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[22].value.rmssd).toEqual(
       77.315,
     );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[22].value.coverage,
+    ).toEqual(0.769);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[22].value.hf).toEqual(
+      949.197,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[22].value.lf).toEqual(
+      1287.311,
+    );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[23].minute).toEqual(
       new Date('2025-10-14T05:10:00.000+09:00'),
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[23].value.rmssd).toEqual(
       89.261,
+    );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[23].value.coverage,
+    ).toEqual(0.715);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[23].value.hf).toEqual(
+      1756.907,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[23].value.lf).toEqual(
+      3544.92,
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[24].minute).toEqual(
       new Date('2025-10-14T05:30:00.000+09:00'),
@@ -800,11 +1015,29 @@ describe('HRVIntraday', () => {
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[24].value.rmssd).toEqual(
       75.464,
     );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[24].value.coverage,
+    ).toEqual(0.79);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[24].value.hf).toEqual(
+      1268.478,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[24].value.lf).toEqual(
+      1082.202,
+    );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[25].minute).toEqual(
       new Date('2025-10-14T05:35:00.000+09:00'),
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[25].value.rmssd).toEqual(
       80.607,
+    );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[25].value.coverage,
+    ).toEqual(0.729);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[25].value.hf).toEqual(
+      946.016,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[25].value.lf).toEqual(
+      2790.421,
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[26].minute).toEqual(
       new Date('2025-10-14T05:40:00.000+09:00'),
@@ -812,11 +1045,29 @@ describe('HRVIntraday', () => {
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[26].value.rmssd).toEqual(
       100.47,
     );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[26].value.coverage,
+    ).toEqual(0.779);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[26].value.hf).toEqual(
+      1601.679,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[26].value.lf).toEqual(
+      2930.757,
+    );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[27].minute).toEqual(
       new Date('2025-10-14T05:50:00.000+09:00'),
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[27].value.rmssd).toEqual(
       85.194,
+    );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[27].value.coverage,
+    ).toEqual(0.968);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[27].value.hf).toEqual(
+      1320.485,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[27].value.lf).toEqual(
+      5866.716,
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[28].minute).toEqual(
       new Date('2025-10-14T05:55:00.000+09:00'),
@@ -824,11 +1075,29 @@ describe('HRVIntraday', () => {
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[28].value.rmssd).toEqual(
       53.26,
     );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[28].value.coverage,
+    ).toEqual(0.777);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[28].value.hf).toEqual(
+      620.894,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[28].value.lf).toEqual(
+      4851.49,
+    );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[29].minute).toEqual(
       new Date('2025-10-14T06:00:00.000+09:00'),
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[29].value.rmssd).toEqual(
       65.87,
+    );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[29].value.coverage,
+    ).toEqual(0.906);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[29].value.hf).toEqual(
+      650.705,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[29].value.lf).toEqual(
+      2672.076,
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[30].minute).toEqual(
       new Date('2025-10-14T06:05:00.000+09:00'),
@@ -836,11 +1105,29 @@ describe('HRVIntraday', () => {
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[30].value.rmssd).toEqual(
       79.297,
     );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[30].value.coverage,
+    ).toEqual(0.982);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[30].value.hf).toEqual(
+      1174.452,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[30].value.lf).toEqual(
+      2733.738,
+    );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[31].minute).toEqual(
       new Date('2025-10-14T06:10:00.000+09:00'),
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[31].value.rmssd).toEqual(
       85.332,
+    );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[31].value.coverage,
+    ).toEqual(0.947);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[31].value.hf).toEqual(
+      1247.196,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[31].value.lf).toEqual(
+      6607.423,
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[32].minute).toEqual(
       new Date('2025-10-14T06:15:00.000+09:00'),
@@ -848,11 +1135,29 @@ describe('HRVIntraday', () => {
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[32].value.rmssd).toEqual(
       73.544,
     );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[32].value.coverage,
+    ).toEqual(0.795);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[32].value.hf).toEqual(
+      813.578,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[32].value.lf).toEqual(
+      6011.86,
+    );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[33].minute).toEqual(
       new Date('2025-10-14T06:20:00.000+09:00'),
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[33].value.rmssd).toEqual(
       64.704,
+    );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[33].value.coverage,
+    ).toEqual(0.819);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[33].value.hf).toEqual(
+      1010.555,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[33].value.lf).toEqual(
+      2084.832,
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[34].minute).toEqual(
       new Date('2025-10-14T06:25:00.000+09:00'),
@@ -860,11 +1165,29 @@ describe('HRVIntraday', () => {
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[34].value.rmssd).toEqual(
       37.107,
     );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[34].value.coverage,
+    ).toEqual(1.003);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[34].value.hf).toEqual(
+      239.076,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[34].value.lf).toEqual(
+      956.103,
+    );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[35].minute).toEqual(
       new Date('2025-10-14T06:30:00.000+09:00'),
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[35].value.rmssd).toEqual(
       22.198,
+    );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[35].value.coverage,
+    ).toEqual(0.726);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[35].value.hf).toEqual(
+      117.927,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[35].value.lf).toEqual(
+      539.171,
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[36].minute).toEqual(
       new Date('2025-10-14T07:30:00.000+09:00'),
@@ -872,11 +1195,29 @@ describe('HRVIntraday', () => {
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[36].value.rmssd).toEqual(
       90.307,
     );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[36].value.coverage,
+    ).toEqual(0.851);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[36].value.hf).toEqual(
+      1383.067,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[36].value.lf).toEqual(
+      9080.806,
+    );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[37].minute).toEqual(
       new Date('2025-10-14T07:35:00.000+09:00'),
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[37].value.rmssd).toEqual(
       87.027,
+    );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[37].value.coverage,
+    ).toEqual(0.983);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[37].value.hf).toEqual(
+      1650.812,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[37].value.lf).toEqual(
+      1554.714,
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[38].minute).toEqual(
       new Date('2025-10-14T07:40:00.000+09:00'),
@@ -884,11 +1225,29 @@ describe('HRVIntraday', () => {
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[38].value.rmssd).toEqual(
       82.524,
     );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[38].value.coverage,
+    ).toEqual(0.938);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[38].value.hf).toEqual(
+      1310.99,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[38].value.lf).toEqual(
+      2339.539,
+    );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[39].minute).toEqual(
       new Date('2025-10-14T07:45:00.000+09:00'),
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[39].value.rmssd).toEqual(
       74.364,
+    );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[39].value.coverage,
+    ).toEqual(1.005);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[39].value.hf).toEqual(
+      1216.019,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[39].value.lf).toEqual(
+      1202.025,
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[40].minute).toEqual(
       new Date('2025-10-14T07:50:00.000+09:00'),
@@ -896,11 +1255,29 @@ describe('HRVIntraday', () => {
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[40].value.rmssd).toEqual(
       87.109,
     );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[40].value.coverage,
+    ).toEqual(0.955);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[40].value.hf).toEqual(
+      1284.971,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[40].value.lf).toEqual(
+      2648.302,
+    );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[41].minute).toEqual(
       new Date('2025-10-14T07:55:00.000+09:00'),
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[41].value.rmssd).toEqual(
       75.911,
+    );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[41].value.coverage,
+    ).toEqual(0.913);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[41].value.hf).toEqual(
+      1388.851,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[41].value.lf).toEqual(
+      2662.252,
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[42].minute).toEqual(
       new Date('2025-10-14T08:00:00.000+09:00'),
@@ -908,11 +1285,29 @@ describe('HRVIntraday', () => {
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[42].value.rmssd).toEqual(
       62.548,
     );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[42].value.coverage,
+    ).toEqual(1.003);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[42].value.hf).toEqual(
+      1320.046,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[42].value.lf).toEqual(
+      342.554,
+    );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[43].minute).toEqual(
       new Date('2025-10-14T08:05:00.000+09:00'),
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[43].value.rmssd).toEqual(
       66.518,
+    );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[43].value.coverage,
+    ).toEqual(0.824);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[43].value.hf).toEqual(
+      1317.98,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[43].value.lf).toEqual(
+      367.929,
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[44].minute).toEqual(
       new Date('2025-10-14T08:10:00.000+09:00'),
@@ -920,11 +1315,29 @@ describe('HRVIntraday', () => {
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[44].value.rmssd).toEqual(
       70.275,
     );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[44].value.coverage,
+    ).toEqual(0.9);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[44].value.hf).toEqual(
+      1193.324,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[44].value.lf).toEqual(
+      2493.988,
+    );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[45].minute).toEqual(
       new Date('2025-10-14T08:30:00.000+09:00'),
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[45].value.rmssd).toEqual(
       67.2,
+    );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[45].value.coverage,
+    ).toEqual(0.918);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[45].value.hf).toEqual(
+      744.026,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[45].value.lf).toEqual(
+      2171.039,
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[46].minute).toEqual(
       new Date('2025-10-14T08:35:00.000+09:00'),
@@ -932,11 +1345,29 @@ describe('HRVIntraday', () => {
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[46].value.rmssd).toEqual(
       67.444,
     );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[46].value.coverage,
+    ).toEqual(0.939);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[46].value.hf).toEqual(
+      911.145,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[46].value.lf).toEqual(
+      4310.475,
+    );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[47].minute).toEqual(
       new Date('2025-10-14T08:40:00.000+09:00'),
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[47].value.rmssd).toEqual(
       69.976,
+    );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[47].value.coverage,
+    ).toEqual(0.989);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[47].value.hf).toEqual(
+      1457.141,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[47].value.lf).toEqual(
+      1684.807,
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[48].minute).toEqual(
       new Date('2025-10-14T08:45:00.000+09:00'),
@@ -944,11 +1375,29 @@ describe('HRVIntraday', () => {
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[48].value.rmssd).toEqual(
       67.085,
     );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[48].value.coverage,
+    ).toEqual(0.991);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[48].value.hf).toEqual(
+      1168.868,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[48].value.lf).toEqual(
+      622.291,
+    );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[49].minute).toEqual(
       new Date('2025-10-14T08:50:00.000+09:00'),
     );
     expect(hrvIntradayResponse.hRVIntraday[0].minutes[49].value.rmssd).toEqual(
       67.336,
+    );
+    expect(
+      hrvIntradayResponse.hRVIntraday[0].minutes[49].value.coverage,
+    ).toEqual(0.929);
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[49].value.hf).toEqual(
+      786.823,
+    );
+    expect(hrvIntradayResponse.hRVIntraday[0].minutes[49].value.lf).toEqual(
+      3916.351,
     );
   });
 });
