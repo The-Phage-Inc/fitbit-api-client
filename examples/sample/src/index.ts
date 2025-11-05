@@ -9,6 +9,7 @@ dotenv.config({ path: '.env.local' });
 const CLIENT_ID = process.env.CLIENT_ID as string;
 const CLIENT_SECRET = process.env.CLIENT_SECRET as string;
 const REDIRECT_URI = process.env.REDIRECT_URI as string;
+const offsetFromUTCMillis = 9 * 60 * 60 * 1000;
 
 if (CLIENT_ID == null || CLIENT_SECRET == null || REDIRECT_URI == null) {
   throw new Error('環境変数が設定されていません');
@@ -78,6 +79,12 @@ app.get('/auth/callback', async (req, res) => {
     console.log(
       'こちらにsleepから睡眠記録を閲覧できます。 http://localhost:3000/fitbit/sleep',
     );
+    console.log(
+      'HRVSummaryはこちらから閲覧できます。 http://localhost:3000/fitbit/heartrate/summary',
+    );
+    console.log(
+      'HRVIntradayはこちらから閲覧できます。 http://localhost:3000/fitbit/heartrate/intraday',
+    );
   } catch (error) {
     console.error(error);
     res.status(500).send('認証エラーが発生しました');
@@ -108,10 +115,57 @@ app.get('/fitbit/sleep', async (req, res) => {
 
   // 睡眠記録を取得
   const sleep = await client.sleep.getSleepLog(
-    '2024-10-07',
+    '2025-10-01',
     profile.user.offsetFromUTCMillis,
   );
   res.status(200).json(sleep);
+});
+
+app.get('/fitbit/heartrate/summary', async (req, res) => {
+  // トークンを取得
+  const refreshToken = database.findRefreshToken();
+  if (!refreshToken) {
+    res.status(400).send('トークンがありません');
+    return;
+  }
+
+  // FitbitClientのインスタンスを作成
+  const client = new FitbitClient({
+    clientId: CLIENT_ID,
+    clientSecret: CLIENT_SECRET,
+    token: { refreshToken },
+  });
+
+  // アクセストークンの更新
+  await client.auth.refreshAccessToken();
+
+  const hRVSummary = await client.heartRate.getHRVSummary('2024-10-07');
+  res.status(200).json(hRVSummary);
+});
+
+app.get('/fitbit/heartrate/intraday', async (req, res) => {
+  // トークンを取得
+  const refreshToken = database.findRefreshToken();
+  if (!refreshToken) {
+    res.status(400).send('トークンがありません');
+    return;
+  }
+
+  // FitbitClientのインスタンスを作成
+  const client = new FitbitClient({
+    clientId: CLIENT_ID,
+    clientSecret: CLIENT_SECRET,
+    token: { refreshToken },
+  });
+
+  // アクセストークンの更新
+  await client.auth.refreshAccessToken();
+
+  const hRVIntraday = await client.heartRate.getHRVIntraday(
+    '2025-08-27',
+    offsetFromUTCMillis,
+  );
+  res.status(200).json(hRVIntraday);
 });
 
 // サーバー起動
